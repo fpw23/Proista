@@ -1,6 +1,6 @@
 {
   "name": "@proista/uidemo",
-  "version": "0.1.0-alpha.5",
+  "version": "0.2.0-alpha.0",
   "description": "Demo Proista UI",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "https://github.com/fpw23/Proista#readme",
@@ -62,11 +62,11 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "@proista/client": "^0.1.0-alpha.7",
-    "@proista/client-data": "^0.1.0-alpha.2",
-    "@proista/client-tools": "^0.1.0-alpha.1",
-    "@proista/client-ui-blockly": "^0.1.0-alpha.1",
-    "@proista/client-ui-material": "^0.1.0-alpha.5",
+    "@proista/client": "^0.2.0-alpha.0",
+    "@proista/client-data": "^0.2.0-alpha.0",
+    "@proista/client-tools": "^0.2.0-alpha.0",
+    "@proista/client-ui-blockly": "^0.2.0-alpha.0",
+    "@proista/client-ui-material": "^0.2.0-alpha.0",
     "@rjsf/material-ui": "^2.2.1",
     "lodash": "^4.17.15",
     "notistack": "^0.9.14",

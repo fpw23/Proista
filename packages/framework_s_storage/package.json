@@ -1,6 +1,6 @@
 {
   "name": "@proista/server-storage",
-  "version": "0.1.0-alpha.6",
+  "version": "0.2.0-alpha.0",
   "description": "Proista Server Data and File Storage",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "https://www.proistaworkflows.com",
@@ -55,8 +55,8 @@
     "grunt-nodemon": "^0.4.2"
   },
   "dependencies": {
-    "@proista/server": "^0.1.0-alpha.5",
-    "@proista/server-core": "^0.1.0-alpha.2",
+    "@proista/server": "^0.2.0-alpha.0",
+    "@proista/server-core": "^0.2.0-alpha.0",
     "arangojs": "^6.14.1",
     "lodash": "^4.17.15",
     "minio": "^7.0.16"
