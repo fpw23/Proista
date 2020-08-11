@@ -1,0 +1,46 @@
+{
+  "schema": {
+    "title": "Validate Form Box",
+    "description": "Show context errors for fields on a form",
+    "type": "object",
+    "properties": {
+      "formbox": {
+        "type": "object",
+        "title": "Form Box Settings",
+        "properties": {
+          "debugMode": {
+            "type": "boolean",
+            "title": "Set Debug Mode",
+            "default": false
+          },
+          "readonly": {
+            "type": "boolean",
+            "title": "Set Read Only",
+            "default": false
+          },
+           "loading": {
+            "type": "boolean",
+            "title": "Set Loading",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "formbox": {
+      "debugMode": {
+        "ui:help": "This will set the debugMode flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "readonly": {
+        "ui:help": "This will set the readonly flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "loading": {
+        "ui:help": "This will set the loading flag on FormBox",
+        "ui:widget": "radio"
+      }
+    }
+  }
+}

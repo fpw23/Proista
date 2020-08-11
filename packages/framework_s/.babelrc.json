@@ -1,0 +1,16 @@
+{
+    "sourceMap": true,
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "node": true
+                }
+            }
+        ]
+    ],
+    "plugins": [
+        "@babel/plugin-transform-async-to-generator"
+      ]
+}

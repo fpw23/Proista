@@ -1,0 +1,45 @@
+{
+  "schema": {
+    "title": "Basic Drawer",
+    "description": "Show basic drawer",
+    "type": "object",
+    "properties": {
+      "BodyText": {
+        "type": "string",
+        "title": "Body Text",
+        "default": "This is the body"
+      },
+      "anchor": {
+        "type": "string",
+        "title": "Anchor To",
+        "enum": [ "left"
+          , "top"
+          , "right"
+          , "bottom"],
+        "default": "right"
+      },
+      "size": {
+        "type": "string",
+        "title": "Size",
+        "enum": [ "Full"
+          , "ThreeQuarters"
+          , "Half"
+          , "Quarter"],
+        "default": "Quarter"
+      }
+    }
+  },
+  "uiSchema": {
+    "BodyText": {
+      "ui:help": "Example of a custom prop passed to the registered drawer component."
+    },
+    "anchor": {
+      "ui:help": "The direct the drawer should side from",
+      "ui:widget": "radio"
+    },
+    "size": {
+      "ui:help": "Size of the drawer",
+      "ui:widget": "radio"
+    }
+  }
+}

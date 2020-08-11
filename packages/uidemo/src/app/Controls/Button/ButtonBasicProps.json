@@ -1,0 +1,147 @@
+{
+  "schema": {
+    "title": "Basic Button",
+    "description": "Show basic settings for button",
+    "type": "object",
+    "properties": {
+      "buttonProps1": {
+        "type": "object",
+        "title": "Settings 1",
+        "properties": {
+          "disabled": {
+            "type": "boolean",
+            "title": "Set Disabled",
+            "default": false
+          },
+          "loading": {
+            "type": "boolean",
+            "title": "Set Loading",
+            "default": false
+          },
+          "color": {
+            "type": "string",
+            "title": "Color",
+            "enum": ["default"
+              , "inherit"
+              , "primary"
+              , "secondary"],
+            "default": "primary"
+          },
+          "variant": {
+            "type": "string",
+            "title": "Variant",
+            "enum": [ "text"
+              , "outlined"
+              , "contained"],
+            "default": "contained"
+          },
+          "size": {
+            "type": "string",
+            "title": "Size",
+            "enum": [ "small"
+              , "medium"
+              , "large"],
+            "default": "medium"
+          },
+          "text": {
+            "type": "string",
+            "title": "Children",
+            "default": "Button 1"
+          }
+        }
+      },
+      "buttonProps2": {
+        "type": "object",
+        "title": "Settings 2",
+        "properties": {
+          "disabled": {
+            "type": "boolean",
+            "title": "Set Disabled",
+            "default": false
+          },
+          "loading": {
+            "type": "boolean",
+            "title": "Set Loading",
+            "default": false
+          },
+          "color": {
+            "type": "string",
+            "title": "Color",
+            "enum": ["default"
+              , "inherit"
+              , "primary"
+              , "secondary"],
+            "default": "secondary"
+          },
+          "variant": {
+            "type": "string",
+            "title": "Variant",
+            "enum": [ "text"
+              , "outlined"
+              , "contained"],
+            "default": "outlined"
+          },
+          "size": {
+            "type": "string",
+            "title": "Size",
+            "enum": [ "small"
+              , "medium"
+              , "large"],
+            "default": "medium"
+          },
+          "text": {
+            "type": "string",
+            "title": "Children",
+            "default": "Button 2"
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "buttonProps1": {
+      "disabled": {
+        "ui:help": "This will set the disable flag",
+        "ui:widget": "radio"
+      },
+      "loading": {
+        "ui:help": "This will set the loading flag",
+        "ui:widget": "radio"
+      },
+      "color": {
+        "ui:help": "The button color."
+      },
+      "variant": {
+        "ui:help": "The variant to use."
+      },
+      "size": {
+        "ui:help": "The size of the button."
+      },
+      "text": {
+        "ui:help": "The childern.  Can be any component (think icons and images) but for this example must be text."
+      }
+    },
+    "buttonProps2": {
+      "disabled": {
+        "ui:help": "This will set the disabled flag",
+        "ui:widget": "radio"
+      },
+      "loading": {
+        "ui:help": "This will set the loading flag",
+        "ui:widget": "radio"
+      },
+      "color": {
+        "ui:help": "The button color."
+      },
+      "variant": {
+        "ui:help": "The variant to use."
+      },
+      "size": {
+        "ui:help": "The size of the button."
+      },
+      "text": {
+        "ui:help": "The childern.  Can be any component (think icons and images) but for this example must be text."
+      }
+    }
+  }
+}

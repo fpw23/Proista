@@ -1,0 +1,79 @@
+{
+  "schema": {
+    "title": "Form Box Header",
+    "description": "Breaks from input into titled sections",
+    "type": "object",
+    "properties": {
+      "formboxheader1": {
+        "type": "object",
+        "title": "Settings 1",
+        "properties": {
+          "Title": {
+            "type": "string",
+            "title": "Title Text",
+            "default": "Section 1"
+          },
+          "gutterTop": {
+            "type": "boolean",
+            "title": "Top Gutter",
+            "default": false
+          },
+          "color": {
+            "type": "string",
+            "title": "Color",
+            "enum": ["initial", "inherit", "primary", "secondary", "textPrimary", "textSecondary", "error"],
+            "default": "initial"
+          }
+        }
+      },
+      "formboxheader2": {
+        "type": "object",
+        "title": "Settings 2",
+        "properties": {
+          "Title": {
+            "type": "string",
+            "title": "Title Text",
+            "default": "Section 2"
+          },
+          "gutterTop": {
+            "type": "boolean",
+            "title": "Top Gutter",
+            "default": true
+          },
+          "color": {
+            "type": "string",
+            "title": "Color",
+            "enum": ["initial", "inherit", "primary", "secondary", "textPrimary", "textSecondary", "error"],
+            "default": "initial"
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "formboxheader1": {
+      "Title": {
+        "ui:help": "The text to use for the title."
+      },
+      "gutterTop": {
+        "ui:help": "If true, will have a top margin.",
+        "ui:widget": "radio"
+      },
+      "color": {
+        "ui:help": "The color of the component. It supports those theme colors that make sense for this component."
+      }
+    },
+    "formboxheader2": {
+      "Title": {
+        "ui:help": "The text to use for the title."
+      },
+      "gutterTop": {
+        "ui:help": "If true, will have a top margin.",
+        "ui:widget": "radio"
+      },
+      "color": {
+        "ui:help": "The color of the component. It supports those theme colors that make sense for this component."
+      }
+    }
+  }
+}

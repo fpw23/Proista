@@ -1,0 +1,58 @@
+{
+  "schema": {
+    "title": "Basic Form Box",
+    "description": "Show basic settings for form box",
+    "type": "object",
+    "properties": {
+      "definition": {
+        "type": "string",
+        "title": "Fields Definition",
+        "default": "[{ \"props\": { \"name\": \"Value1\", \"label\": \"Value 1\", \"caption\": \"This is value 1\" }, \"component\": \"TextBox\" }]"
+      },
+      "formbox": {
+        "type": "object",
+        "title": "Settings",
+        "properties": {
+          "debugMode": {
+            "type": "boolean",
+            "title": "Set Debug Mode",
+            "default": false
+          },
+          "readonly": {
+            "type": "boolean",
+            "title": "Set Read Only",
+            "default": false
+          },
+          "loading": {
+            "type": "boolean",
+            "title": "Set Loading",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "formbox": {
+      "debugMode": {
+        "ui:help": "This will set the debugMode flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "readonly": {
+        "ui:help": "This will set the readonly flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "loading": {
+        "ui:help": "This will set the loading flag on FormBox",
+        "ui:widget": "radio"
+      }
+    },
+    "definition": {
+      "ui:help": "The schema for this dynamic form",
+      "ui:widget": "textarea",
+      "ui:options": {
+        "rows": 15
+      }
+    }
+  }
+}

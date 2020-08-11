@@ -1,0 +1,29 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "command": {
+    "bootstrap": {
+      "nohoist": [
+        "grunt",
+        "grunt-babel",
+        "grunt-concurrent",
+        "grunt-contrib-clean",
+        "grunt-contrib-concat",
+        "grunt-contrib-copy",
+        "grunt-contrib-cssmin",
+        "grunt-contrib-less",
+        "grunt-contrib-uglify-es",
+        "grunt-contrib-watch",
+        "grunt-eslint",
+        "grunt-exec",
+        "grunt-nodemon",
+        "eslint-formatter-pretty"
+      ]
+    },
+    "version": {
+      "allowBranch": ["master", "feature/*"]
+    }
+  },
+  "version": "independent"
+}

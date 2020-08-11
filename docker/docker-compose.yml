@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+
+  proistafiles:
+    image: minio/minio
+    ports:
+      - 3010:9000
+    container_name: files.proista.local
+    environment:
+      - MINIO_ACCESS_KEY=ProistaAccessKey
+      - MINIO_SECRET_KEY=ProistaSecretKey
+    command: server /data
+    networks:
+        - proistanet
+
+  proistadata:
+    image: arangodb/arangodb:3.6.2
+    ports:
+      - 3011:8529
+    container_name: db.proista.local
+    environment:
+      - ARANGO_ROOT_PASSWORD=@Test24
+      - ARANGO_STORAGE_ENGINE=rocksdb
+    networks:
+        - proistanet
+
+networks:
+  proistanet:

@@ -1,0 +1,16 @@
+node_modules
+
+packages/framework_c/lib
+packages/framework_c_data/lib
+packages/framework_c_tools/lib
+packages/framework_c_ui_blockly/lib
+packages/framework_c_ui_material/lib
+
+packages/framework_s/lib
+packages/framework_s_core/lib
+packages/framework_s_storage/lib
+
+packages/uidemo/dist
+
+
+lerna-debug.log
