@@ -1,6 +1,6 @@
 {
   "name": "@proista/client-ui-material",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "description": "> TODO: description",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "https://github.com/fpw23/Proista#readme",
@@ -42,7 +42,7 @@
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.53",
-    "@proista/client": "^0.2.0-alpha.0",
+    "@proista/client": "^0.2.0-alpha.1",
     "@proista/client-data": "^0.2.0-alpha.0",
     "@proista/client-tools": "^0.2.0-alpha.0",
     "@proista/client-ui-blockly": "^0.2.0-alpha.0",
