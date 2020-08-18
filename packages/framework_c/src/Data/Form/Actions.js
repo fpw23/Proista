@@ -3,8 +3,8 @@ import _ from 'lodash'
 import { ah } from './Types'
 
 export const formInitValues = (dispatch) => {
-  return (formName, data) => {
-    dispatch(initialize(formName, _.extend({}, data), false))
+  return (formName, data, keepDirty = false, options) => {
+    dispatch(initialize(formName, _.extend({}, data), keepDirty, options))
   }
 }
 
