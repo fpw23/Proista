@@ -1,6 +1,6 @@
 # `framework_c`
 
-> TODO: description
+> Core Client Framework 
 
 ## Usage
 
