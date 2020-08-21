@@ -1,6 +1,6 @@
 {
   "name": "@proista/client-ui-blockly",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "description": "Blockly UI Core",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "https://github.com/fpw23/Proista#readme",
@@ -37,7 +37,7 @@
     "grunt-exec": "^3.0.0"
   },
   "dependencies": {
-    "@proista/client-tools": "^0.2.0-alpha.0",
+    "@proista/client-tools": "^0.2.0-alpha.1",
     "blockly": "^3.20200402.1",
     "lodash": "^4.17.15"
   },
