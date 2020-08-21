@@ -7,16 +7,18 @@ import AsDebouncedInput from '../DebouncedInput'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import FilledInput from '@material-ui/core/FilledInput'
 
-const DebouncedInput = AsDebouncedInput(OutlinedInput, { timeout: 500 })
-
 class TextBoxClass extends React.Component {
   render () {
-    const { password = false, multiline = false, ...rest } = this.props
+    const { password = false, multiline = false, debounce = {}, ...rest } = this.props
     var inputType = password ? 'password' : 'text'
     return (
       <FieldLayoutBox {...rest}>
         {({ showError, value, onChange, name, placeHolder, loading, readonly, testId, onBlur, label }) => {
-          const InputComponent = readonly === true ? FilledInput : DebouncedInput
+          const InputComponent = readonly === true
+            ? FilledInput
+            : debounce.enabled === true
+              ? AsDebouncedInput(OutlinedInput, { timeout: debounce.timeout || 500 })
+              : OutlinedInput
 
           const htmlId = `text_${name}`
           const labelId = `textlb_${name}`

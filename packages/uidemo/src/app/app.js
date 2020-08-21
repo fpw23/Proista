@@ -79,6 +79,7 @@ export class AppPlain extends React.Component {
             {/* Text Box */}
             <IndexRoute path='TextBox' to='./Basic' />
             <TB.TextBoxBasic path='TextBox/Basic' />
+            <TB.TextBoxDebounce path='TextBox/Debounce' />
             {/* Combo Box */}
             <IndexRoute path='ComboBox' to='./Basic' />
             <CBO.ComboBoxBasic path='ComboBox/Basic' />

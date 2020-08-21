@@ -1,0 +1,71 @@
+{
+    "schema": {
+      "title": "Text Box Debound Support",
+      "description": "text debounce settings",
+      "type": "object",
+      "properties": {
+        "textbox": {
+          "type": "object",
+          "title": "Settings",
+          "properties": {
+            "multiline": {
+              "type": "boolean",
+              "title": "Multiline",
+              "default": false
+            },
+            "debounce": {
+                "type": "object",
+                "title": "Debounce Settings",
+                "properties": {
+                    "enabled": {
+                        "type": "boolean",
+                        "title": "Enabled",
+                        "default": true
+                    },
+                    "timeout": {
+                        "type": "number",
+                        "title": "Timeout (MS)",
+                        "default": 500 
+                    }
+                }
+              }
+          }
+        },
+        "formbox": {
+          "type": "object",
+          "title": "FormBox Settings",
+          "properties": {
+            "debugMode": {
+              "type": "boolean",
+              "title": "Set Debug Mode",
+              "default": false
+            },
+            "readonly": {
+              "type": "boolean",
+              "title": "Set Read Only",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "uiSchema": {
+      "formbox": {
+        "debugMode": {
+          "ui:help": "This will set the debugMode flag on FormBox",
+          "ui:widget": "radio"
+        },
+        "readonly": {
+          "ui:help": "This will set the readonly flag on FormBox",
+          "ui:widget": "radio"
+        }
+      },
+      "textbox": {
+        "multiline": {
+          "ui:help": "This will set the multiline flag on FullWidth TextBox",
+          "ui:widget": "radio"
+        }
+      }
+    }
+  }
+  

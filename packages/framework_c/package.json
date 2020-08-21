@@ -46,14 +46,16 @@
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "query-string": "^6.12.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0",
     "redux-form": "^8.3.5",
     "shortid": "^2.2.15",
     "store2": "^2.11.2",
     "suber": "^5.0.1",
     "uuid": "^8.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0"
   },
   "gitHead": "507aae846c082f7c9ef4eab7fb5469a5caac17da"
 }
