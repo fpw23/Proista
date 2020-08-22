@@ -21,7 +21,7 @@ export class FormBoxHeaderPlain extends React.Component {
       <PropExplorer propSchema={propSchema}>
         {({ formboxheader1 = {}, formboxheader2 = {} }) => {
           return <div className={classes.root}>
-            <FormBox form={formName}>
+            <FormBox form={formName} onSubmit={(values) => { console.log(values) }}>
               <FBH {...formboxheader1}></FBH>
               <Row>
                 <TextBox name='Value1' label='Value 1' layout={LayoutSizes.Half} />

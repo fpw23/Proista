@@ -48,12 +48,12 @@ class FormBoxPlain extends React.Component {
   }
 
   render () {
-    const { 'data-tid': testId = '', handleSubmit, loading = false, className, children, readonly = false, debugMode = false, onChange } = this.props
+    const { 'data-tid': testId = '', handleSubmit, loading = false, className, children, readonly = false, debugMode = false, onChange, onSubmit } = this.props
     const { activeSideEffects = {} } = this.state
 
     return (
       <FormBoxContext.Provider value={{ loading: loading, readonly: readonly, sideEffects: activeSideEffects, debugMode: debugMode }}>
-        <form data-tid={testId} className={className} onSubmit={handleSubmit} onChange={onChange} >
+        <form data-tid={testId} className={className} onSubmit={handleSubmit(onSubmit)} onChange={onChange} >
           {children}
         </form>
       </FormBoxContext.Provider>

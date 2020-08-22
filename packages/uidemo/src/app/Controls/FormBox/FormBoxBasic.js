@@ -23,7 +23,7 @@ export class FormBoxBasicPlain extends React.Component {
       <PropExplorer propSchema={propSchema}>
         {({ formbox = {} }) => {
           return <div className={classes.root}>
-            <FormBox {...formbox} form={formName}>
+            <FormBox {...formbox} form={formName} onSubmit={(values) => { console.log(values) }}>
               <Row>
                 <TextBox name='Value1' label='Value 1' layout={LayoutSizes.Half} />
               </Row>

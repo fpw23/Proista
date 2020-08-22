@@ -40,6 +40,11 @@ const formName = 'Test_FormBoxSubmit'
 
 export class FormBoxSubmitPlain extends React.Component {
   componentDidMount () {
+    const { FormInitValues } = this.props
+    FormInitValues(formName, {
+      Value1: 'Test 1',
+      Value2: 'Test 2'
+    })
     SendBusMessage(DrawerChannels.NewRegister({ key: 'UITests.DrawResultsBody', component: DrawerResultsBody }))
   }
 
@@ -80,7 +85,7 @@ export const FormBoxSubmit = compose(
   withStyles(styles),
   WithRedux(
     [FStates.Data(formName)],
-    [FActions.Submit]
+    [FActions.Submit, FActions.InitValues]
   )
 )(FormBoxSubmitPlain)
 

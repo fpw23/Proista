@@ -45,7 +45,7 @@ export class FormBoxValidationPlain extends React.Component {
       <PropExplorer propSchema={propSchema}>
         {({ formbox = {} }) => {
           return <div className={classes.root}>
-            <FormBox {...formbox} form={formName}>
+            <FormBox {...formbox} form={formName} onSubmit={(values) => { console.log(values) }}>
               <Row>
                 <TextBox name='Value1' label='Value 1' caption='This is the caption' layout={LayoutSizes.Half} />
                 <TextBox name='Value2' label='Value 2' layout={LayoutSizes.Half} />
