@@ -7,6 +7,7 @@ import { store } from './store'
 import { Provider as ReduxProvider } from 'react-redux'
 import { globalHistory } from '@reach/router'
 import { DrawerManager } from '@proista/client-ui-material/lib/Controls/Core/DrawerManager'
+import { SnackbarUtilsConfigurator } from '@proista/client-ui-material/lib/Tools/SnackbarUtilsConfigurator'
 import { CatchError } from '@proista/client/lib/Controls/Core/CatchError'
 import { WithRedux } from '@proista/client-data/lib/WithRedux'
 import { ah as RActions } from '@proista/client/lib/Data/Router/Types'
@@ -59,10 +60,11 @@ const Main = compose(
 ReactDOM.render(
   <ReduxProvider store={store}>
     <ThemeProvider theme={lightTheme}>
-      <SnackbarProvider maxSnack={3} anchorOrigin={{
+      <SnackbarProvider maxSnack={5} anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left'
       }}>
+        <SnackbarUtilsConfigurator />
         <Main />
       </SnackbarProvider>
     </ThemeProvider>

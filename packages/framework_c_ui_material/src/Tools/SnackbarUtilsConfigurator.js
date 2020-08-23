@@ -1,5 +1,7 @@
 import { useSnackbar } from 'notistack'
 import React from 'react'
+import Button from '@material-ui/core/Button'
+import _ from 'lodash'
 
 const InnerSnackbarUtilsConfigurator = (props) => {
   props.setUseSnackbarRef(useSnackbar())
@@ -16,19 +18,41 @@ export const SnackbarUtilsConfigurator = () => {
 }
 
 export const showSnackbar = {
-  success (msg) {
-    this.toast(msg, 'success')
+  success (msg, options) {
+    this.toast(msg, 'success', options)
   },
-  warning (msg) {
-    this.toast(msg, 'warning')
+  warning (msg, options) {
+    this.toast(msg, 'warning', options)
   },
-  info (msg) {
-    this.toast(msg, 'info')
+  info (msg, options) {
+    this.toast(msg, 'info', options)
   },
-  error (msg) {
-    this.toast(msg, 'error')
+  error (msg, options) {
+    this.toast(msg, 'error', options)
   },
-  toast (msg, variant = 'default') {
-    useSnackbarRef.enqueueSnackbar(msg, { variant })
+  confirm (msg, options = {}) {
+    const { callBack, trueText = 'Yes', falseText = 'No', ...opts } = options
+    this.toast(msg, 'warning', {
+      ...opts,
+      action: (key) => (
+        [
+          <Button key='trueOption' onClick={() => { useSnackbarRef.closeSnackbar(key); callBack() }}>
+            {trueText}
+          </Button>,
+          <Button key='falseOption' onClick={() => { useSnackbarRef.closeSnackbar(key) }}>
+            {falseText}
+          </Button>
+        ]
+      ),
+      persist: true,
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'center'
+      }
+    })
+  },
+  toast (msg, variant = 'default', options = {}) {
+    const opts = _.merge({ variant: variant }, options)
+    useSnackbarRef.enqueueSnackbar(msg, opts)
   }
 }

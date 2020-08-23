@@ -1,0 +1,30 @@
+{
+    "schema": {
+      "title": "Notifications",
+      "description": "Show toast using snackbar api",
+      "type": "object",
+      "properties": {
+        "anchorOrigin": {
+          "type": "object",
+          "title": "Anchor Origin",
+          "properties": {
+            "vertical": {
+                "type": "string",
+                "title": "Vertical",
+                "enum": [ "top"
+                  , "bottom"],
+                "default": "bottom"
+              },
+              "horizontal": {
+                "type": "string",
+                "title": "Horizontal",
+                "enum": [ "left"
+                  , "center"
+                  , "right"],
+                "default": "left"
+              }      
+          }
+        }
+      }
+    }
+  }

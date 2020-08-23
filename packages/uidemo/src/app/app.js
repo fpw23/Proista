@@ -14,6 +14,7 @@ import * as CBO from './Controls/ComboBox/index'
 import * as CB from './Controls/CheckBox/index'
 import * as D from './Controls/Drawers/index'
 import * as NB from './Controls/NumberBox/index'
+import * as SN from './Controls/Notifications/index'
 
 const styles = (theme) => {
   return {
@@ -35,6 +36,7 @@ class AppSideBar extends React.Component {
       <SideBarLink title='Number Box' to='/NumberBox' relativePath={relativePath} />
       <SideBarLink title='Button' to='/Button' relativePath={relativePath} />
       <SideBarLink title='Drawer' to='/Drawer' relativePath={relativePath} />
+      <SideBarLink title='Notifications' to='/Notifications' relativePath={relativePath} />
     </SideBarList>
   }
 }
@@ -62,6 +64,7 @@ export class AppPlain extends React.Component {
         <NB.SideBar path='NumberBox/*' relativePath={uri} />
         <B.SideBar path='Button/*' relativePath={uri} />
         <D.SideBar path='Drawer/*' relativePath={uri} />
+        <SN.SideBar path='Notifications/*' relativePath={uri} />
       </Router>
     )
   }
@@ -99,9 +102,12 @@ export class AppPlain extends React.Component {
             {/* Button */}
             <IndexRoute path='Button' to='./Basic' />
             <B.ButtonBasic path='Button/Basic' />
-            {/* Button */}
+            {/* Drawer */}
             <IndexRoute path='Drawer' to='./Basic' />
             <D.DrawerBasic path='Drawer/Basic' />
+            {/* Notifications */}
+            <IndexRoute path='Notifications' to='./Basic' />
+            <SN.Basic path='Notifications/Basic' />
             {/* Unknown */}
             <UnknownRoute default />
           </Router>
