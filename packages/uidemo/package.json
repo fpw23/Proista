@@ -1,6 +1,6 @@
 {
   "name": "@proista/uidemo",
-  "version": "0.2.0-alpha.5",
+  "version": "0.2.0-alpha.6",
   "description": "Demo Proista UI",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "https://github.com/fpw23/Proista#readme",
@@ -66,7 +66,7 @@
     "@proista/client-data": "^0.2.0-alpha.1",
     "@proista/client-tools": "^0.2.0-alpha.1",
     "@proista/client-ui-blockly": "^0.2.0-alpha.1",
-    "@proista/client-ui-material": "^0.2.0-alpha.5",
+    "@proista/client-ui-material": "^0.2.0-alpha.6",
     "@rjsf/material-ui": "^2.2.1",
     "lodash": "^4.17.15",
     "notistack": "^0.9.14",
