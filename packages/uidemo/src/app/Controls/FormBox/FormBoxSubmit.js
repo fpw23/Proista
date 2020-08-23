@@ -3,7 +3,7 @@ import { FormBox, TextBox } from '@proista/client-ui-material/lib/Controls/Forms
 import { Row, LayoutSizes, Button, DrawerChannels, DrawerStandardStyles } from '@proista/client-ui-material/lib/Controls/Core/index'
 import { SendBusMessage } from '@proista/client/lib/Tools/index'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
-import { ah as FActions, sh as FStates } from '@proista/client/lib/Data/Form/Types'
+import { ah as FActions } from '@proista/client/lib/Data/Form/Types'
 import { compose } from '@proista/client-tools/lib/index'
 import { WithRedux } from '@proista/client-data/lib/WithRedux'
 import propSchema from './FormBoxSubmitProps.json'
@@ -45,6 +45,7 @@ export class FormBoxSubmitPlain extends React.Component {
       Value1: 'Test 1',
       Value2: 'Test 2'
     })
+    this.forceUpdate()
     SendBusMessage(DrawerChannels.NewRegister({ key: 'UITests.DrawResultsBody', component: DrawerResultsBody }))
   }
 
@@ -84,7 +85,7 @@ export class FormBoxSubmitPlain extends React.Component {
 export const FormBoxSubmit = compose(
   withStyles(styles),
   WithRedux(
-    [FStates.Data(formName)],
+    [],
     [FActions.Submit, FActions.InitValues]
   )
 )(FormBoxSubmitPlain)

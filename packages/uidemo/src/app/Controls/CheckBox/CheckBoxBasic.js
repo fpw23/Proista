@@ -27,7 +27,7 @@ export class CheckBoxBasicPlain extends React.Component {
           options.push({ Text: 'Option 4', Value: '4' })
 
           return <div className={classes.root}>
-            <FormBox {...formbox} form='Test_CheckBoxBasic'>
+            <FormBox {...formbox} form='Test_CheckBoxBasic' onSubmit={(values) => { console.log(values) }}>
               <Row>
                 <CheckBox name='Plain' label='Plain' text='Check Me' layout={LayoutSizes.Half} />
                 <CheckBox name='NoLable' text='With No Label' layout={LayoutSizes.Half} />

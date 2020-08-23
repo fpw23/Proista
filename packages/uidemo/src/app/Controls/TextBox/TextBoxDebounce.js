@@ -19,9 +19,10 @@ export class TextBoxDebouncePlain extends React.Component {
       <PropExplorer propSchema={propSchema}>
         {({ formbox = {}, textbox = {} }) => {
           return <div className={classes.root}>
-            <FormBox {...formbox} form='Test_TextBoxDebounce'>
+            <FormBox {...formbox} form='Test_TextBoxDebounce' onSubmit={(values) => { console.log(values) }}>
               <Row>
-                <TextBox {...textbox} name='DebounceValue' label='Debounce' layout={LayoutSizes.Full} />
+                <TextBox {...textbox} name='DebounceValue1' label='Debounce' layout={LayoutSizes.Full} />
+                <TextBox {...textbox} name='DebounceValue2' label='Debounce' layout={LayoutSizes.Full} />
               </Row>
             </FormBox>
           </div>

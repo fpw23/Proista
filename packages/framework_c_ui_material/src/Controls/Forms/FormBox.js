@@ -62,5 +62,4 @@ class FormBoxPlain extends React.Component {
 }
 
 export const FormBox = reduxForm({
-  enableReinitialize: true
 })(FormBoxPlain)

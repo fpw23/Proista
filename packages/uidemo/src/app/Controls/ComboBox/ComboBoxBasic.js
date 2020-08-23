@@ -25,7 +25,7 @@ export class ComboBoxBasicPlain extends React.Component {
           options.push({ Text: 'Option 4', Value: '4' })
 
           return <div className={classes.root}>
-            <FormBox {...formbox} form='Test_ComboBoxBasic'>
+            <FormBox {...formbox} form='Test_ComboBoxBasic' onSubmit={(values) => { console.log(values) }}>
               <Row>
                 <ComboBox options={options} name='Plain' label='Plain' layout={LayoutSizes.Half} />
                 <ComboBox name='NoOptions' label='No Options' layout={LayoutSizes.Half} />

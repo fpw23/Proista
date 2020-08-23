@@ -19,11 +19,11 @@ export class TextBoxBasicPlain extends React.Component {
       <PropExplorer propSchema={propSchema}>
         {({ formbox = {}, textbox = {} }) => {
           return <div className={classes.root}>
-            <FormBox {...formbox} form='Test_TextBoxBasic'>
+            <FormBox {...formbox} form='Test_TextBoxBasic' onSubmit={(values) => { console.log(values) }}>
               <Row>
-                <TextBox name='Plain' label='Plain' layout={LayoutSizes.Half} />
-                <TextBox name='Password' password label='Password' layout={LayoutSizes.Half} />
-                <TextBox {...textbox} name='FullWidth' label='Full Width' layout={LayoutSizes.Full} />
+                <TextBox debounce={{ enabled: false }} name='Plain' label='Plain' layout={LayoutSizes.Half} />
+                <TextBox debounce={{ enabled: false }} name='Password' password label='Password' layout={LayoutSizes.Half} />
+                <TextBox debounce={{ enabled: false }} {...textbox} name='FullWidth' label='Full Width' layout={LayoutSizes.Full} />
               </Row>
             </FormBox>
           </div>

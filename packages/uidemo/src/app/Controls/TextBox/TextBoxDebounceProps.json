@@ -14,20 +14,9 @@
               "default": false
             },
             "debounce": {
-                "type": "object",
-                "title": "Debounce Settings",
-                "properties": {
-                    "enabled": {
-                        "type": "boolean",
-                        "title": "Enabled",
-                        "default": true
-                    },
-                    "timeout": {
-                        "type": "number",
-                        "title": "Timeout (MS)",
-                        "default": 500 
-                    }
-                }
+                "type": "boolean",
+                "title": "Debounce",
+                "default": true
               }
           }
         },
@@ -62,9 +51,13 @@
       },
       "textbox": {
         "multiline": {
-          "ui:help": "This will set the multiline flag on FullWidth TextBox",
+          "ui:help": "This will set the multiline flag on TextBox",
           "ui:widget": "radio"
-        }
+        },
+        "debounce": {
+            "ui:help": "This will set the debounce flag on TextBox",
+            "ui:widget": "radio"
+          }
       }
     }
   }

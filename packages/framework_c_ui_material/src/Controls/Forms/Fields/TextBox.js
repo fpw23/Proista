@@ -3,21 +3,23 @@ import { Field } from 'redux-form'
 import { FieldLayoutBox } from '../FieldLayoutBox'
 import { FieldValueFormatter, FieldValueParser } from '../FieldValueConverters'
 import InputLabel from '@material-ui/core/InputLabel'
-import AsDebouncedInput from '../DebouncedInput'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import FilledInput from '@material-ui/core/FilledInput'
+import { AsDebouncedInput } from '../DebouncedInput'
+
+const DebouncedOutlinedInput = AsDebouncedInput(OutlinedInput, { timeout: 500 })
 
 class TextBoxClass extends React.Component {
   render () {
-    const { password = false, multiline = false, debounce = {}, ...rest } = this.props
-    var inputType = password ? 'password' : 'text'
+    const { password = false, multiline = false, debounced = true, ...rest } = this.props
+    const inputType = password ? 'password' : 'text'
     return (
       <FieldLayoutBox {...rest}>
         {({ showError, value, onChange, name, placeHolder, loading, readonly, testId, onBlur, label }) => {
-          const InputComponent = readonly === true
+          const TextComponent = readonly === true
             ? FilledInput
-            : debounce.enabled === true
-              ? AsDebouncedInput(OutlinedInput, { timeout: debounce.timeout || 500 })
+            : debounced === true
+              ? DebouncedOutlinedInput
               : OutlinedInput
 
           const htmlId = `text_${name}`
@@ -35,7 +37,7 @@ class TextBoxClass extends React.Component {
                 {label}
               </InputLabel>
             )}
-            <InputComponent
+            <TextComponent
               data-tid={testId}
               onChange={onChange}
               onBlur={onBlur}

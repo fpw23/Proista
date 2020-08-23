@@ -19,7 +19,7 @@ export class NumberBoxBasicPlain extends React.Component {
       <PropExplorer propSchema={propSchema}>
         {({ formbox = {} }) => {
           return <div className={classes.root}>
-            <FormBox {...formbox} form='Test_NumberBoxBasic'>
+            <FormBox {...formbox} form='Test_NumberBoxBasic' onSubmit={(values) => { console.log(values) }}>
               <Row>
                 <NumberBox name='Plain' label='Plain' layout={LayoutSizes.Half} />
                 <NumberBox name='Currency' label='Currency' type='currency' layout={LayoutSizes.Half} />
