@@ -1,0 +1,37 @@
+{
+  "schema": {
+    "title": "Transfer List Box",
+    "description": "A left/right list box input",
+    "type": "object",
+    "properties": {
+      "formbox": {
+        "type": "object",
+        "title": "FormBox Settings",
+        "properties": {
+          "debugMode": {
+            "type": "boolean",
+            "title": "Set Debug Mode",
+            "default": false
+          },
+          "readonly": {
+            "type": "boolean",
+            "title": "Set Read Only",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "formbox": {
+      "debugMode": {
+        "ui:help": "This will set the debugMode flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "readonly": {
+        "ui:help": "This will set the readonly flag on FormBox",
+        "ui:widget": "radio"
+      }
+    }
+  }
+}

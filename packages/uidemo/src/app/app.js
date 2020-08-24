@@ -15,6 +15,7 @@ import * as CB from './Controls/CheckBox/index'
 import * as D from './Controls/Drawers/index'
 import * as NB from './Controls/NumberBox/index'
 import * as SN from './Controls/Notifications/index'
+import * as TL from './Controls/TransferListBox/index'
 
 const styles = (theme) => {
   return {
@@ -37,6 +38,7 @@ class AppSideBar extends React.Component {
       <SideBarLink title='Button' to='/Button' relativePath={relativePath} />
       <SideBarLink title='Drawer' to='/Drawer' relativePath={relativePath} />
       <SideBarLink title='Notifications' to='/Notifications' relativePath={relativePath} />
+      <SideBarLink title='Transfer List Box' to='/TransferListBox' relativePath={relativePath} />
     </SideBarList>
   }
 }
@@ -50,6 +52,7 @@ export class AppPlain extends React.Component {
     RouterAddPathName('CheckBox', 'Check Box')
     RouterAddPathName('NumberBox', 'Number Box')
     RouterAddPathName('WithHeader', 'With Header')
+    RouterAddPathName('TransferListBox', 'Transfer List Box')
   }
 
   renderSideBar = () => {
@@ -65,6 +68,7 @@ export class AppPlain extends React.Component {
         <B.SideBar path='Button/*' relativePath={uri} />
         <D.SideBar path='Drawer/*' relativePath={uri} />
         <SN.SideBar path='Notifications/*' relativePath={uri} />
+        <TL.SideBar path='TransferListBox/*' relativePath={uri} />
       </Router>
     )
   }
@@ -108,6 +112,9 @@ export class AppPlain extends React.Component {
             {/* Notifications */}
             <IndexRoute path='Notifications' to='./Basic' />
             <SN.Basic path='Notifications/Basic' />
+            {/* TransferListBox */}
+            <IndexRoute path='TransferListBox' to='./Basic' />
+            <TL.Basic path='TransferListBox/Basic' />
             {/* Unknown */}
             <UnknownRoute default />
           </Router>
