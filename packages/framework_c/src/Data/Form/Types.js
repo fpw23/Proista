@@ -6,7 +6,8 @@ export const ah = {
   Destory: 'FORM_DESTORY',
   SetFieldValue: 'FORM_SETFIELDVALUE',
   SetValidation: 'FORM_SETVALIDATION',
-  ClearValidation: 'FORM_CLEARVALIDATION'
+  ClearValidation: 'FORM_CLEARVALIDATION',
+  ClearFields: 'FORM_CLEARFIELDS'
 }
 
 export const sh = {

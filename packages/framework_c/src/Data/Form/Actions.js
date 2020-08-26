@@ -1,4 +1,4 @@
-import { initialize, reset, submit, destroy, change, clearSubmitErrors, setSubmitFailed, stopSubmit, setSubmitSucceeded } from 'redux-form'
+import { initialize, reset, submit, destroy, change, clearSubmitErrors, setSubmitFailed, stopSubmit, setSubmitSucceeded, clearFields } from 'redux-form'
 import _ from 'lodash'
 import { ah } from './Types'
 
@@ -46,6 +46,12 @@ export const formSetValidation = (dispatch) => {
   }
 }
 
+export const formClearFields = (dispatch) => {
+  return (formName, keepTouched = false, persistentSubmitErrors = false, fields = []) => {
+    dispatch(clearFields(formName, keepTouched, persistentSubmitErrors, ...fields))
+  }
+}
+
 export const formClearValidation = (dispatch) => {
   return (formName) => {
     dispatch(clearSubmitErrors(formName))
@@ -60,7 +66,8 @@ export const ActionList = [
   { name: ah.Destroy, action: formDestroy, propName: 'FormDestroy' },
   { name: ah.SetFieldValue, action: formSetFieldValue, propName: 'FormSetFieldValue' },
   { name: ah.SetValidation, action: formSetValidation, propName: 'FormSetValidation' },
-  { name: ah.ClearValidation, action: formClearValidation, propName: 'FormClearValidation' }
+  { name: ah.ClearValidation, action: formClearValidation, propName: 'FormClearValidation' },
+  { name: ah.ClearFields, action: formClearFields, propName: 'FormClearFields' }
 ]
 
 export default ActionList

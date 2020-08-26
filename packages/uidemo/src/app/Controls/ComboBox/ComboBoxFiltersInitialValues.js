@@ -3,10 +3,10 @@ import { FormBox, ComboBox } from '@proista/client-ui-material/lib/Controls/Form
 import { Row, LayoutSizes } from '@proista/client-ui-material/lib/Controls/Core/index'
 import { withStyles } from '@material-ui/core/styles'
 import { compose } from '@proista/client-tools/lib/index'
-import propSchema from './ComboBoxFiltersProps.json'
+import propSchema from './ComboBoxFiltersInitialValuesProps.json'
 import { PropExplorer } from '../PropExplorer'
 import { WithRedux } from '@proista/client-data/lib/WithRedux'
-import { sh as FStates } from '@proista/client/lib/Data/Form/Types'
+import { sh as FStates, ah as FActions } from '@proista/client/lib/Data/Form/Types'
 
 const styles = (theme) => ({
   root: {
@@ -32,14 +32,19 @@ cOptions.push({ Text: 'Option C 2', Value: 'C2', ParentValue: 'B1' })
 cOptions.push({ Text: 'Option C 3', Value: 'C3', ParentValue: 'B2' })
 cOptions.push({ Text: 'Option C 4', Value: 'C4', ParentValue: 'B3' })
 
-export class ComboBoxFiltersPlain extends React.Component {
+export class ComboBoxFiltersInitialValuesPlain extends React.Component {
+  componentDidMount () {
+    const { FormInitValues } = this.props
+    FormInitValues('Test_ComboBoxFiltersInitialValues', { aValue: 'A1', bValue: 'B2', cValue: 'C3' })
+  }
+
   render () {
     const { classes, FormData } = this.props
     return <React.Fragment>
       <PropExplorer propSchema={propSchema}>
         {({ formbox = {} }) => {
           return <div className={classes.root}>
-            <FormBox {...formbox} form='Test_ComboBoxFilters' onSubmit={(values) => { console.log(values) }}>
+            <FormBox {...formbox} form='Test_ComboBoxFiltersInitialValues' onSubmit={(values) => { console.log(values) }}>
               <Row>
                 <ComboBox options={aOptions} name='aValue' label='A Value' layout={LayoutSizes.Half} />
                 <ComboBox options={bOptions} name='bValue' label='B Value' filterValue={{ ParentValue: FormData.aValue }} layout={LayoutSizes.Half} />
@@ -53,9 +58,9 @@ export class ComboBoxFiltersPlain extends React.Component {
   }
 }
 
-export const ComboBoxFilters = compose(
+export const ComboBoxFiltersInitialValues = compose(
   withStyles(styles),
-  WithRedux([FStates.Data('Test_ComboBoxFilters')], [])
-)(ComboBoxFiltersPlain)
+  WithRedux([FStates.Data('Test_ComboBoxFiltersInitialValues')], [FActions.InitValues])
+)(ComboBoxFiltersInitialValuesPlain)
 
-export default ComboBoxFilters
+export default ComboBoxFiltersInitialValues

@@ -18,14 +18,14 @@ class ComboBoxClassPlain extends React.Component {
 
     this.state = {
       autosetComplete: false,
-      optionsAvailable: false
+      optionsAvailable: false,
+      firstDidUpdate: true
     }
   }
 
   static defaultProps = {
     valueProp: 'Value',
     textProp: 'Text',
-    // filterProp: 'ParentValue',
     options: [],
     autosetFirstOption: false
   }
@@ -41,12 +41,11 @@ class ComboBoxClassPlain extends React.Component {
     }
   }
 
-  componentDidUpdate ({
-    options: prevOptions = [],
-    filterValue: prevFilterValue
-  }, {
-    optionsAvailable: prevOptionsAvailable
-  }) {
+  componentDidUpdate (prevProps, prevState) {
+    const {
+      options: prevOptions = [],
+      filterValue: prevFilterValue
+    } = prevProps
     const {
       options: currOptions = [],
       filterValue: currFilterValue,
@@ -60,12 +59,24 @@ class ComboBoxClassPlain extends React.Component {
     } = this.props
 
     const {
+      optionsAvailable: prevOptionsAvailable
+    } = prevState
+    const {
       optionsAvailable: currOptionsAvailable,
-      autosetComplete
+      autosetComplete,
+      firstDidUpdate
     } = this.state
 
-    if (_.isEqual(prevFilterValue, currFilterValue) === false) {
-      FormSetFieldValue(meta.form, input.name, undefined)
+    const filtersSame = _.isEqual(prevFilterValue, currFilterValue)
+
+    if (filtersSame === false) {
+      if (!firstDidUpdate) {
+        FormSetFieldValue(meta.form, input.name, null)
+      } else {
+        this.setState({
+          firstDidUpdate: false
+        })
+      }
     }
 
     if (prevOptionsAvailable === false & currOptionsAvailable === true) {
@@ -188,7 +199,7 @@ class ComboBoxClassPlain extends React.Component {
 };
 
 const ComboBoxClass = compose(
-  WithRedux([], [FActions.SetFieldValue])
+  WithRedux([], [FActions.SetFieldValue, FActions.ClearFields])
 )(ComboBoxClassPlain)
 
 export const ComboBox = ({ parse, format, fieldType, ...rest }) => { return <Field parse={fieldType ? FieldValueParser(fieldType) : parse} format={fieldType ? FieldValueFormatter(fieldType) : format} {...rest} component={ComboBoxClass} /> } // eslint-disable-line
