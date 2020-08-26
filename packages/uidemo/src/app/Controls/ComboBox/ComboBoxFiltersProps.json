@@ -1,0 +1,46 @@
+{
+  "schema": {
+    "title": "Combo Boxes with filters",
+    "description": "A cascading set of combo boxes",
+    "type": "object",
+    "properties": {
+      "formbox": {
+        "type": "object",
+        "title": "FormBox Settings",
+        "properties": {
+          "debugMode": {
+            "type": "boolean",
+            "title": "Set Debug Mode",
+            "default": false
+          },
+          "readonly": {
+            "type": "boolean",
+            "title": "Set Read Only",
+            "default": false
+          },
+           "loading": {
+            "type": "boolean",
+            "title": "Set Loading",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "formbox": {
+      "debugMode": {
+        "ui:help": "This will set the debugMode flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "readonly": {
+        "ui:help": "This will set the readonly flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "loading": {
+        "ui:help": "This will set the loading flag on FormBox",
+        "ui:widget": "radio"
+      }
+    }
+  }
+}

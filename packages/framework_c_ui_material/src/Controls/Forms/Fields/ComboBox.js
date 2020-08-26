@@ -25,6 +25,7 @@ class ComboBoxClassPlain extends React.Component {
   static defaultProps = {
     valueProp: 'Value',
     textProp: 'Text',
+    // filterProp: 'ParentValue',
     options: [],
     autosetFirstOption: false
   }
@@ -41,12 +42,14 @@ class ComboBoxClassPlain extends React.Component {
   }
 
   componentDidUpdate ({
-    options: prevOptions = []
+    options: prevOptions = [],
+    filterValue: prevFilterValue
   }, {
     optionsAvailable: prevOptionsAvailable
   }) {
     const {
       options: currOptions = [],
+      filterValue: currFilterValue,
       FormSetFieldValue,
       meta,
       input,
@@ -60,6 +63,10 @@ class ComboBoxClassPlain extends React.Component {
       optionsAvailable: currOptionsAvailable,
       autosetComplete
     } = this.state
+
+    if (_.isEqual(prevFilterValue, currFilterValue) === false) {
+      FormSetFieldValue(meta.form, input.name, undefined)
+    }
 
     if (prevOptionsAvailable === false & currOptionsAvailable === true) {
       if (autosetFirstOption === true & autosetComplete === false) {
@@ -105,12 +112,23 @@ class ComboBoxClassPlain extends React.Component {
     }
   }
 
-  renderOptions (options, value, sideEffects) {
-    const { valueProp, textProp } = this.props
+  renderOptions (options, value, filterValue) {
+    const { valueProp, textProp, filterProp } = this.props
 
-    return _.map(options, (o, i) => {
+    return _.map((
+      filterValue
+        ? _.filter(options, filterValue)
+        : options
+    ), (o, i) => {
       const valuePropValue = o[valueProp || 'Value']
       const textPropValue = o[textProp || 'Text']
+
+      if (filterValue) {
+        const filterPropValue = o[filterProp || 'ParentValue']
+        if (filterValue !== filterPropValue) {
+
+        }
+      }
 
       return (
         <MenuItem key={valuePropValue} value={valuePropValue}>{textPropValue || valuePropValue}</MenuItem>
@@ -119,7 +137,7 @@ class ComboBoxClassPlain extends React.Component {
   }
 
   render () {
-    const { options, valueProp, textProp, ...rest } = this.props
+    const { options, valueProp, textProp, filterValue, ...rest } = this.props
     const { optionsAvailable } = this.state
     return (
       <FieldLayoutBox {...rest}>
@@ -145,7 +163,7 @@ class ComboBoxClassPlain extends React.Component {
               InputComponent = <FilledInput {...inputProps} value={LookupValueFormatter(options, value).Text} />
             } else {
               InputComponent = <Select {...inputProps} value={value} label={labelElement}>
-                {this.renderOptions(options, value, sideEffects)}
+                {this.renderOptions(options, value, filterValue)}
               </Select>
             }
           } else {

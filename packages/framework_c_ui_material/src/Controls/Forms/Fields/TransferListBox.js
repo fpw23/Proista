@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import Card from '@material-ui/core/Card'
@@ -55,6 +55,10 @@ function TransferList (props) {
   const [checked, setChecked] = React.useState([])
   const [left, setLeft] = React.useState(options)
   const [right, setRight] = React.useState(value)
+
+  useEffect(() => {
+    setLeft(options)
+  }, options)
 
   const leftChecked = intersection(checked, left, valueProp)
   const rightChecked = intersection(checked, right, valueProp)

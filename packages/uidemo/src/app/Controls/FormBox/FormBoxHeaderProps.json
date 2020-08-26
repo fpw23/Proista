@@ -8,7 +8,7 @@
         "type": "object",
         "title": "Settings 1",
         "properties": {
-          "Title": {
+          "title": {
             "type": "string",
             "title": "Title Text",
             "default": "Section 1"
@@ -30,7 +30,7 @@
         "type": "object",
         "title": "Settings 2",
         "properties": {
-          "Title": {
+          "title": {
             "type": "string",
             "title": "Title Text",
             "default": "Section 2"

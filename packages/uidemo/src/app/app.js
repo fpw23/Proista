@@ -90,6 +90,7 @@ export class AppPlain extends React.Component {
             {/* Combo Box */}
             <IndexRoute path='ComboBox' to='./Basic' />
             <CBO.ComboBoxBasic path='ComboBox/Basic' />
+            <CBO.ComboBoxFilters path='ComboBox/Filters' />
             {/* Check Box */}
             <IndexRoute path='CheckBox' to='./Basic' />
             <CB.CheckBoxBasic path='CheckBox/Basic' />
