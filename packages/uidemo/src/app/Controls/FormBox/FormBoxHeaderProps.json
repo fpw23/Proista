@@ -18,6 +18,11 @@
             "title": "Top Gutter",
             "default": false
           },
+          "hide": {
+            "type": "boolean",
+            "title": "Hide",
+            "default": false
+          },
           "color": {
             "type": "string",
             "title": "Color",
@@ -40,6 +45,11 @@
             "title": "Top Gutter",
             "default": true
           },
+          "hide": {
+            "type": "boolean",
+            "title": "Hide",
+            "default": false
+          },
           "color": {
             "type": "string",
             "title": "Color",
@@ -59,6 +69,10 @@
         "ui:help": "If true, will have a top margin.",
         "ui:widget": "radio"
       },
+      "hide": {
+        "ui:help": "If true, will render null.",
+        "ui:widget": "radio"
+      },
       "color": {
         "ui:help": "The color of the component. It supports those theme colors that make sense for this component."
       }
@@ -69,6 +83,10 @@
       },
       "gutterTop": {
         "ui:help": "If true, will have a top margin.",
+        "ui:widget": "radio"
+      },
+      "hide": {
+        "ui:help": "If true, will render null.",
         "ui:widget": "radio"
       },
       "color": {

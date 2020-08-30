@@ -48,8 +48,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const FormBoxHeader = (props) => {
   const classes = useStyles()
-  const { title, children, color = 'initial', gutterTop = false } = props
+  const { title, children, color = 'initial', gutterTop = false, hide = false } = props
   const hrClass = classes[`hr${color}`]
+  if (hide === true) {
+    return null
+  }
   return (
     <Row className={gutterTop ? classes.rowGutterTop : ''} >
       <Col layout={LayoutSizes.Full}>
