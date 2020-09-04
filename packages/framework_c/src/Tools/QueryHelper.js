@@ -78,7 +78,7 @@ export function WithQuery (options) {
                     AppStateAppendArray(appStateKey, a.map, values)
                   }
                   ret[`${a.map}Clear`] = () => {
-                    AppStateClearArray(opts)
+                    AppStateClearArray(appStateKey, a.map)
                   }
                 } else if (_.isString(a.map) === true) {
                   ret[`${a.map}Set`] = (value) => {
