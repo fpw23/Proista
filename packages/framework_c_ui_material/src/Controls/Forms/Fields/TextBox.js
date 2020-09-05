@@ -6,16 +6,29 @@ import InputLabel from '@material-ui/core/InputLabel'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import FilledInput from '@material-ui/core/FilledInput'
 import { AsDebouncedInput } from '../DebouncedInput'
+import _ from 'lodash'
 
 const DebouncedOutlinedInput = AsDebouncedInput(OutlinedInput, { timeout: 500 })
 
 class TextBoxClass extends React.Component {
+  onBlur = (e) => {
+    const { input: { onBlur }, dontAutoTrim = false } = this.props
+    if (_.isFunction(onBlur)) {
+      if (!dontAutoTrim) {
+        const trimmedValue = _.trim(e.target.value)
+        onBlur(trimmedValue)
+      } else {
+        onBlur(e)
+      }
+    }
+  }
+
   render () {
     const { password = false, multiline = false, debounced = true, ...rest } = this.props
     const inputType = password ? 'password' : 'text'
     return (
       <FieldLayoutBox {...rest}>
-        {({ showError, value, onChange, name, placeHolder, loading, readonly, testId, onBlur, label }) => {
+        {({ showError, value, onChange, name, placeHolder, loading, readonly, testId, label }) => {
           const TextComponent = readonly === true
             ? FilledInput
             : debounced === true
@@ -40,7 +53,7 @@ class TextBoxClass extends React.Component {
             <TextComponent
               data-tid={testId}
               onChange={onChange}
-              onBlur={onBlur}
+              onBlur={this.onBlur}
               fullWidth={true}
               label={readonly === true ? null : labelElement}
               value={value}

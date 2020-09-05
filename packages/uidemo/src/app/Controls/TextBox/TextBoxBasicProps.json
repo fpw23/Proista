@@ -12,6 +12,11 @@
             "type": "boolean",
             "title": "Multiline",
             "default": false
+          },
+          "dontAutoTrim": {
+            "type": "boolean",
+            "title": "Don't Auto Trim",
+            "default": false
           }
         }
       },
@@ -46,7 +51,11 @@
     },
     "textbox": {
       "multiline": {
-        "ui:help": "This will set the multiline flag on FullWidth TextBox",
+        "ui:help": "This will set the multiline flag on TextBox",
+        "ui:widget": "radio"
+      },
+      "dontAutoTrim": {
+        "ui:help": "This will set the dontAutoTrim flag on TextBox.  Defaults to false so it will always autotrim",
         "ui:widget": "radio"
       }
     }
