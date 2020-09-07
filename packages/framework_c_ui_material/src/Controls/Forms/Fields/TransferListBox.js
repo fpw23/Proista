@@ -178,7 +178,7 @@ function TransferList (props) {
   )
 }
 
-class TransferListBoxClass extends React.Component {
+export class TransferListBoxClass extends React.Component {
   render () {
     const { options = [], ...rest } = this.props
     return (

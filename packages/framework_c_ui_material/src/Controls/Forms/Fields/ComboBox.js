@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import FilledInput from '@material-ui/core/FilledInput'
 
-class ComboBoxClassPlain extends React.Component {
+export class ComboBoxClassPlain extends React.Component {
   constructor (props) {
     super(props)
 

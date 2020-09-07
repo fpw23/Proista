@@ -29,7 +29,7 @@ const NumberFormatInput = (props) => {
   )
 }
 
-class NumberBoxClass extends React.Component {
+export class NumberBoxClass extends React.Component {
   render () {
     const {
       type = 'standard',

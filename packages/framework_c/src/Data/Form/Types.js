@@ -7,7 +7,17 @@ export const ah = {
   SetFieldValue: 'FORM_SETFIELDVALUE',
   SetValidation: 'FORM_SETVALIDATION',
   ClearValidation: 'FORM_CLEARVALIDATION',
-  ClearFields: 'FORM_CLEARFIELDS'
+  ClearFields: 'FORM_CLEARFIELDS',
+  ArrayInsert: 'FORM_ARRAYINSERT',
+  ArrayPush: 'FORM_ARRAYPUSH',
+  ArrayPop: 'FORM_ARRAYPOP',
+  ArrayMove: 'FORM_ARRAYMOVE',
+  ArrayRemove: 'FORM_ARRAYREMOVE',
+  ArrayRemoveAll: 'FORM_ARRAYREMOVEALL',
+  ArrayShift: 'FORM_ARRAYSHIFT',
+  ArrayUnshift: 'FORM_ARRAYUNSHIFT',
+  ArraySplice: 'FORM_ARRAYSPLICE',
+  ArraySwap: 'FORM_ARRAYSWAP'
 }
 
 export const sh = {

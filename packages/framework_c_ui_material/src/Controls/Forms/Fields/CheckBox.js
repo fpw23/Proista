@@ -9,7 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import FormLabel from '@material-ui/core/FormLabel'
 import FormGroup from '@material-ui/core/FormGroup'
 
-class CheckBoxClass extends React.Component {
+export class CheckBoxClass extends React.Component {
     static defaultProps = {
       readonlyTrueValue: 'Yes',
       readonlyFalseValue: 'No'

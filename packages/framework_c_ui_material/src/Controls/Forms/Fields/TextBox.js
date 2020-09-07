@@ -10,7 +10,7 @@ import _ from 'lodash'
 
 const DebouncedOutlinedInput = AsDebouncedInput(OutlinedInput, { timeout: 500 })
 
-class TextBoxClass extends React.Component {
+export class TextBoxClass extends React.Component {
   onBlur = (e) => {
     const { input: { onBlur }, dontAutoTrim = false } = this.props
     if (_.isFunction(onBlur)) {
