@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import FilledInput from '@material-ui/core/FilledInput'
+import ListSubheader from '@material-ui/core/ListSubheader'
 
 export class ComboBoxClassPlain extends React.Component {
   constructor (props) {
@@ -124,27 +125,47 @@ export class ComboBoxClassPlain extends React.Component {
   }
 
   renderOptions (options, value, filterValue) {
-    const { valueProp, textProp, filterProp } = this.props
+    const { valueProp, textProp, filterProp, groupProp } = this.props
 
-    return _.map((
+    const opts = (
       filterValue
         ? _.filter(options, filterValue)
         : options
-    ), (o, i) => {
-      const valuePropValue = o[valueProp || 'Value']
-      const textPropValue = o[textProp || 'Text']
+    )
 
-      if (filterValue) {
-        const filterPropValue = o[filterProp || 'ParentValue']
-        if (filterValue !== filterPropValue) {
-
+    if (groupProp) {
+      return _.map(_.toPairs(_.groupBy(opts, (i) => { return _.get(i, groupProp, '?') })), ([groupName, groupItems]) => {
+        const ret = [
+          <ListSubheader key={`group_${groupName}`}>
+            {groupName}
+          </ListSubheader>
+        ]
+        for (const value of groupItems) {
+          const valuePropValue = value[valueProp || 'Value']
+          const textPropValue = value[textProp || 'Text']
+          ret.push(
+            <MenuItem key={valuePropValue} value={valuePropValue}>{textPropValue || valuePropValue}</MenuItem>
+          )
         }
-      }
+        return ret
+      })
+    } else {
+      return _.map(opts, (o, i) => {
+        const valuePropValue = o[valueProp || 'Value']
+        const textPropValue = o[textProp || 'Text']
 
-      return (
-        <MenuItem key={valuePropValue} value={valuePropValue}>{textPropValue || valuePropValue}</MenuItem>
-      )
-    })
+        if (filterValue) {
+          const filterPropValue = o[filterProp || 'ParentValue']
+          if (filterValue !== filterPropValue) {
+
+          }
+        }
+
+        return (
+          <MenuItem key={valuePropValue} value={valuePropValue}>{textPropValue || valuePropValue}</MenuItem>
+        )
+      })
+    }
   }
 
   render () {

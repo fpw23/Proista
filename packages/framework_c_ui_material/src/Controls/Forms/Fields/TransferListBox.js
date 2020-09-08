@@ -15,6 +15,7 @@ import { FieldLayoutBox } from '../FieldLayoutBox'
 import { Row, Col, LayoutSizes } from '../../Core/index'
 import { FieldValueFormatter, FieldValueParser } from '../FieldValueConverters'
 import Typography from '@material-ui/core/Typography'
+import ListSubheader from '@material-ui/core/ListSubheader'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,7 @@ function union (a, b, valueProp) {
 function TransferList (props) {
   const {
     value = [], options = [], leftTitle = 'Available', rightTitle = 'Selected', textProp = 'Text', valueProp = 'Value',
-    onChange
+    onChange, groupProp = ''
   } = props
   const classes = useStyles()
   const [checked, setChecked] = React.useState([])
@@ -124,24 +125,48 @@ function TransferList (props) {
       />
       <Divider />
       <List className={classes.list} dense component="div" role="list">
-        {_.map(items, (value) => {
-          const labelId = `transfer-list-all-item-${value[valueProp]}-label`
+        {groupProp
+          ? _.map(_.toPairs(_.groupBy(items, (i) => { return _.get(i, groupProp, '?') })), ([groupName, groupItems]) => {
+            const ret = [
+              <ListSubheader key={`group_${groupName}`}>
+                {groupName}
+              </ListSubheader>
+            ]
+            for (const value of groupItems) {
+              const labelId = `transfer-list-all-item-${value[valueProp]}-label`
+              ret.push(
+                <ListItem key={value[valueProp]} role="listitem" button onClick={handleToggle(value)}>
+                  <ListItemIcon>
+                    <Checkbox
+                      checked={_.find(checked, (v) => { return v[valueProp] === value[valueProp] }) !== undefined}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={value[textProp]} />
+                </ListItem>
+              )
+            }
+            return ret
+          })
+          : _.map(items, (value) => {
+            const labelId = `transfer-list-all-item-${value[valueProp]}-label`
 
-          return (
-            <ListItem key={value[valueProp]} role="listitem" button onClick={handleToggle(value)}>
-              <ListItemIcon>
-                <Checkbox
-                  checked={_.find(checked, (v) => { return v[valueProp] === value[valueProp] }) !== undefined}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={value[textProp]} />
-            </ListItem>
-          )
-        })}
-        <ListItem />
+            return (
+              <ListItem key={value[valueProp]} role="listitem" button onClick={handleToggle(value)}>
+                <ListItemIcon>
+                  <Checkbox
+                    checked={_.find(checked, (v) => { return v[valueProp] === value[valueProp] }) !== undefined}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={value[textProp]} />
+              </ListItem>
+            )
+          })}
       </List>
     </Card>
   )
@@ -180,7 +205,7 @@ function TransferList (props) {
 
 export class TransferListBoxClass extends React.Component {
   render () {
-    const { options = [], ...rest } = this.props
+    const { options = [], groupProp, textProp, valueProp, ...rest } = this.props
     return (
       <FieldLayoutBox {...rest}>
         {({ showError, value = [], onChange, name, placeHolder, loading, readonly, testId, onBlur, label }) => {
@@ -195,6 +220,9 @@ export class TransferListBoxClass extends React.Component {
             )}
             <Col layout={LayoutSizes.Full}>
               <TransferList
+                groupProp={groupProp}
+                textProp={textProp}
+                valueProp={valueProp}
                 data-tid={testId}
                 options={options}
                 value={value}

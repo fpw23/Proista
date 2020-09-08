@@ -92,6 +92,7 @@ export class AppPlain extends React.Component {
             <CBO.ComboBoxBasic path='ComboBox/Basic' />
             <CBO.ComboBoxFilters path='ComboBox/Filters' />
             <CBO.ComboBoxFiltersInitialValues path='ComboBox/FiltersInitialValues' />
+            <CBO.ComboBoxGrouping path='ComboBox/Grouping' />
             {/* Check Box */}
             <IndexRoute path='CheckBox' to='./Basic' />
             <CB.CheckBoxBasic path='CheckBox/Basic' />
@@ -117,6 +118,7 @@ export class AppPlain extends React.Component {
             {/* TransferListBox */}
             <IndexRoute path='TransferListBox' to='./Basic' />
             <TL.Basic path='TransferListBox/Basic' />
+            <TL.Grouping path='TransferListBox/Grouping' />
             {/* Unknown */}
             <UnknownRoute default />
           </Router>

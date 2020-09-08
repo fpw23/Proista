@@ -6,6 +6,7 @@ export class SideBar extends React.Component {
     const { relativePath } = this.props
     return <SideBarList>
       <SideBarLink title='Basic' to='TransferListBox/Basic' relativePath={relativePath} />
+      <SideBarLink title='Grouping' to='TransferListBox/Grouping' relativePath={relativePath} />
       <SideBarBackLink noIcon relativePath={relativePath} />
     </SideBarList>
   }
