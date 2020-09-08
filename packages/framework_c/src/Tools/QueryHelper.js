@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { compose } from '@proista/client-tools/lib/index'
 import { WithRedux } from '@proista/client-data/lib/WithRedux'
 import { ah as ASActions, sh as ASState } from '@proista/client-data/lib/AppState/Types'
+import { IdHelper } from './IdHelper'
 import React from 'react'
 import axios from 'axios'
 
@@ -47,14 +48,15 @@ export function WithQuery (options) {
         trackLoading: true,
         trackSkipCount: true,
         trackHasMore: true,
-        trackCallCount: false
+        trackCallCount: false,
+        multiInstance: false
       }, lopts)
 
       if (_.isString(opts.stateKey) === false) {
         throw Error('With Query must be passed a statekey prop!')
       }
 
-      const appStateKey = `${opts.stateKey}_QueryData`
+      const appStateKey = opts.multiInstance === true ? `${opts.stateKey}_QueryData_${IdHelper.shortId()}` : `${opts.stateKey}_QueryData`
 
       class internalPlain extends React.Component {
             getQueryProps = _.once(() => {
@@ -194,6 +196,16 @@ export function WithQuery (options) {
 
               return ret
             })
+
+            componentWillUnmount () {
+              if (opts.clearOnUnmount !== false) {
+                const { AppStateClearValue } = this.props
+                AppStateClearValue(appStateKey)
+              } else if (opts.multiInstance === true) {
+                const { AppStateClearValue } = this.props
+                AppStateClearValue(appStateKey)
+              }
+            }
 
             render () {
               const { AppData } = this.props
