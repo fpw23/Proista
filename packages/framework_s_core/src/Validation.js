@@ -10,7 +10,7 @@ export const Joi = JoiCore.extend(JoiMoment)
 export const ConvertValidationErrorDetails = (details, section = '') => {
   return _.map(details, (d) => {
     const msg = d.message
-    const pth = d.path.join('.')
+    const pth = _.replace(_.map(d.path, (p) => { return _.isNumber(p) ? `[${p}]` : p }).join('.'), '.[', '[')
 
     if (_.startsWith(msg, '"value" failed custom validation because ')) {
       const errorMessage = msg.substring(41)
