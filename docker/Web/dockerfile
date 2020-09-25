@@ -1,0 +1,13 @@
+FROM node:lts-alpine
+
+RUN apk update
+
+WORKDIR /app
+
+COPY app /app
+
+RUN npm install --production
+
+CMD node server.js
+
+EXPOSE 80

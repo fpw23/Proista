@@ -204,6 +204,11 @@ function TransferList (props) {
 }
 
 export class TransferListBoxClass extends React.Component {
+  static defaultProps = {
+    textProp: 'Text',
+    valueProp: 'Value'
+  }
+
   render () {
     const { options = [], groupProp, textProp, valueProp, ...rest } = this.props
     return (
