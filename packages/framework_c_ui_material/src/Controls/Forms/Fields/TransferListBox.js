@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -16,7 +16,251 @@ import { Row, Col, LayoutSizes } from '../../Core/index'
 import { FieldValueFormatter, FieldValueParser } from '../FieldValueConverters'
 import Typography from '@material-ui/core/Typography'
 import ListSubheader from '@material-ui/core/ListSubheader'
+import { comparePaths } from '@proista/client-tools/lib/comparePaths'
 
+const transferStyles = (theme) => ({
+  root: {
+    width: '100%'
+  },
+  cardHeader: {
+    padding: theme.spacing(1, 2)
+  },
+  list: {
+    width: '100%',
+    height: 230,
+    backgroundColor: theme.palette.background.paper,
+    overflow: 'auto'
+  },
+  button: {
+    margin: theme.spacing(0.5, 0)
+  }
+})
+
+function not (a, b, valueProp) {
+  return _.filter(a, (aValue) => { return _.find(b, (bValue) => { return aValue[valueProp] === bValue[valueProp] }) === undefined })
+}
+
+function intersection (a, b, valueProp) {
+  return _.filter(a, (aValue) => { return _.find(b, (bValue) => { return aValue[valueProp] === bValue[valueProp] }) !== undefined })
+}
+
+function union (a, b, valueProp) {
+  return [...a, ...not(b, a, valueProp)]
+}
+
+class TransferListPlain extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      checked: [],
+      left: [],
+      right: []
+    }
+  }
+
+  componentDidMount () {
+    this.setState((state, props) => {
+      const { value = [], options = [] } = props
+      return {
+        left: _.clone(options),
+        right: _.clone(value)
+      }
+    })
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    const options = comparePaths('options', this.props, prevProps, [])
+
+    if (options.HasChanged) {
+      if (options.Previous === undefined) {
+        this.setState({
+          left: _.clone(options)
+        })
+      }
+    }
+  }
+
+  handleToggle = (value) => () => {
+    const { valueProp } = this.props
+    const { checked } = this.state
+    const currentIndex = _.findIndex(checked, (v) => { return value[valueProp] === v[valueProp] })
+    const newChecked = [...checked]
+
+    if (currentIndex === -1) {
+      newChecked.push(value)
+    } else {
+      newChecked.splice(currentIndex, 1)
+    }
+
+    this.setState({
+      checked: newChecked
+    })
+  }
+
+  handleToggleAll = (items) => () => {
+    this.setState((state, props) => {
+      const { checked } = state
+      const { valueProp } = props
+      if (this.numberOfChecked(items) === items.length) {
+        return {
+          checked: not(checked, items, valueProp)
+        }
+      } else {
+        return {
+          checked: union(checked, items, valueProp)
+        }
+      }
+    })
+  }
+
+  handleCheckedRight = () => {
+    this.setState((state, props) => {
+      const { checked, left, right } = state
+      const { valueProp, onChange } = props
+      const leftChecked = intersection(checked, left, valueProp)
+      const newValues = [...right, ...leftChecked]
+
+      if (_.isFunction(onChange)) {
+        onChange(newValues)
+      }
+      return {
+        left: not(left, leftChecked, valueProp),
+        right: newValues,
+        checked: not(checked, leftChecked, valueProp)
+      }
+    })
+  }
+
+  handleCheckedLeft = () => {
+    this.setState((state, props) => {
+      const { right, left, checked } = state
+      const { valueProp, onChange } = props
+      const rightChecked = intersection(checked, right, valueProp)
+      const newValues = not(right, rightChecked, valueProp)
+      if (_.isFunction(onChange)) {
+        onChange(newValues)
+      }
+      return {
+        left: [...left, ...rightChecked],
+        right: newValues,
+        checked: not(checked, rightChecked, valueProp)
+      }
+    })
+  }
+
+  numberOfChecked = (items) => {
+    const { checked } = this.state
+    const { valueProp } = this.props
+    return intersection(checked, items, valueProp).length
+  }
+
+  renderList = (title, items) => {
+    const { classes, groupProp, valueProp, textProp } = this.props
+    const { checked } = this.state
+
+    return <Card>
+      <CardHeader
+        className={classes.cardHeader}
+        avatar={
+          <Checkbox
+            onClick={this.handleToggleAll(items)}
+            checked={this.numberOfChecked(items) === items.length && items.length !== 0}
+            indeterminate={this.numberOfChecked(items) !== items.length && this.numberOfChecked(items) !== 0}
+            disabled={items.length === 0}
+            inputProps={{ 'aria-label': 'all items selected' }}
+          />
+        }
+        title={title}
+        subheader={`${this.numberOfChecked(items)}/${items.length} selected`}
+      />
+      <Divider />
+      <List className={classes.list} dense component="div" role="list">
+        {groupProp
+          ? _.map(_.toPairs(_.groupBy(items, (i) => { return _.get(i, groupProp, '?') })), ([groupName, groupItems]) => {
+            const ret = [
+              <ListSubheader key={`group_${groupName}`}>
+                {groupName}
+              </ListSubheader>
+            ]
+            for (const value of groupItems) {
+              const labelId = `transfer-list-all-item-${value[valueProp]}-label`
+              ret.push(
+                <ListItem key={value[valueProp]} role="listitem" button onClick={this.handleToggle(value)}>
+                  <ListItemIcon>
+                    <Checkbox
+                      checked={_.find(checked, (v) => { return v[valueProp] === value[valueProp] }) !== undefined}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-labelledby': labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={value[textProp]} />
+                </ListItem>
+              )
+            }
+            return ret
+          })
+          : _.map(items, (value) => {
+            const labelId = `transfer-list-all-item-${value[valueProp]}-label`
+
+            return (
+              <ListItem key={value[valueProp]} role="listitem" button onClick={this.handleToggle(value)}>
+                <ListItemIcon>
+                  <Checkbox
+                    checked={_.find(checked, (v) => { return v[valueProp] === value[valueProp] }) !== undefined}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={value[textProp]} />
+              </ListItem>
+            )
+          })}
+      </List>
+    </Card>
+  }
+
+  render () {
+    const { classes, leftTitle, rightTitle, valueProp } = this.props
+    const { left, right, checked } = this.state
+    const leftChecked = intersection(checked, left, valueProp)
+    const rightChecked = intersection(checked, right, valueProp)
+
+    return <Row justify="center" alignItems="center" className={classes.root}>
+      <Col layout={LayoutSizes.Five}>{this.renderList(leftTitle, left)}</Col>
+      <Col layout={LayoutSizes.Two}>
+        <Row direction="column" alignItems="center">
+          <Button
+            variant="outlined"
+            size="small"
+            className={classes.button}
+            onClick={this.handleCheckedRight}
+            disabled={leftChecked.length === 0}
+            aria-label="move selected right"
+          >
+          &gt;
+          </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            className={classes.button}
+            onClick={this.handleCheckedLeft}
+            disabled={rightChecked.length === 0}
+            aria-label="move selected left"
+          >
+          &lt;
+          </Button>
+        </Row>
+      </Col>
+      <Col layout={LayoutSizes.Five}>{this.renderList(rightTitle, right)}</Col>
+    </Row>
+  }
+}
+
+const TransferList = withStyles(transferStyles)(TransferListPlain)
+
+/*
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%'
@@ -202,6 +446,7 @@ function TransferList (props) {
     </Row>
   )
 }
+*/
 
 export class TransferListBoxClass extends React.Component {
   static defaultProps = {
