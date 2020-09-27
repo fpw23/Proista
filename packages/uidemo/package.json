@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "start": "grunt start",
-    "predeploy": "grunt predeploy" 
+    "prepdeploy": "grunt prepdeploy" 
   },
   "publishConfig": {
     "access": "restricted"
