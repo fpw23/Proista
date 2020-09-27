@@ -1,6 +1,6 @@
 {
   "name": "@proista/uidemo",
-  "version": "0.2.0-alpha.20",
+  "version": "0.2.0-alpha.21",
   "description": "Demo Proista UI",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "https://github.com/fpw23/Proista#readme",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "start": "grunt start",
-    "prepdeploy": "grunt prepdeploy" 
+    "prepdeploy": "grunt prepdeploy"
   },
   "publishConfig": {
     "access": "restricted"
@@ -62,19 +62,19 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "@proista/client": "^0.2.0-alpha.8",
+    "@proista/client": "^0.2.0-alpha.9",
     "@proista/client-data": "^0.2.0-alpha.1",
     "@proista/client-tools": "^0.2.0-alpha.1",
     "@proista/client-ui-blockly": "^0.2.0-alpha.1",
-    "@proista/client-ui-material": "^0.2.0-alpha.20",
+    "@proista/client-ui-material": "^0.2.0-alpha.21",
     "@rjsf/material-ui": "^2.2.1",
+    "express": "^4.17.1",
     "lodash": "^4.17.15",
     "notistack": "^0.9.14",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
-    "redux": "^4.0.5",
-    "express": "^4.17.1"
+    "redux": "^4.0.5"
   },
   "repository": {
     "type": "git",
