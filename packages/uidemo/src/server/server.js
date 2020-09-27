@@ -8,34 +8,45 @@ const port = process.env.PORT || 3001
 const contentFolder = path.join(__dirname, '../content')
 app.use('/content', express.static(contentFolder))
 
-const webpack = require('webpack')
-const webpackMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
+if (process.env.NODE_ENV === 'development') {
+  const webpack = require('webpack')
+  const webpackMiddleware = require('webpack-dev-middleware')
+  const webpackHotMiddleware = require('webpack-hot-middleware')
 
-const config = require('../../src/webpack.config.js')
-const htmlIndex = '../app/index.html'
+  const config = require('../../src/webpack.config.js')
+  const htmlIndex = '../app/index.html'
 
-const compiler = webpack(config)
-const middleware = webpackMiddleware(compiler, {
-  publicPath: config.output.publicPath,
-  contentBase: false,
-  stats: {
-    colors: true,
-    hash: false,
-    timings: true,
-    chunks: false,
-    chunkModules: false,
-    modules: false
-  }
-})
+  const compiler = webpack(config)
+  const middleware = webpackMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    contentBase: false,
+    stats: {
+      colors: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false
+    }
+  })
+  app.use(middleware)
+  app.use(webpackHotMiddleware(compiler))
 
-app.use(middleware)
-app.use(webpackHotMiddleware(compiler))
+  app.get('*', function response (req, res) {
+    res.write(fs.readFileSync(path.join(__dirname, htmlIndex)))
+    res.end()
+  })
+} else {
+  const appFolder = path.join(__dirname, '../app')
+  app.use('/', express.static(appFolder))
 
-app.get('*', function response (req, res) {
-  res.write(fs.readFileSync(path.join(__dirname, htmlIndex)))
-  res.end()
-})
+  const rootHTML = fs.readFileSync(path.join(__dirname, '../app/index.html'))
+
+  app.get('*', function response (req, res) {
+    res.write(rootHTML)
+    res.end()
+  })
+}
 
 app.listen(port, '0.0.0.0', function onStart (err) {
   if (err) {

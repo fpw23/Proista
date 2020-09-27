@@ -8,6 +8,6 @@ COPY app /app
 
 RUN npm install --production
 
-CMD node server.js
+CMD node server/server.js
 
-EXPOSE 80
+EXPOSE 3001

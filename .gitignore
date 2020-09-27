@@ -14,3 +14,5 @@ packages/uidemo/dist
 
 
 lerna-debug.log
+
+docker/Web/app/

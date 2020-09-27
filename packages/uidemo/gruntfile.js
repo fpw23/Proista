@@ -60,15 +60,8 @@ module.exports = function (grunt) {
       app: ['./dist/*']
     },
     exec: {
-      webpackWindows: {
-        cwd: './node_modules/.bin',
-        cmd: function (webpackfile) { return `webpack --config ${webpackfile}` },
-        options: {
-          env: 'production'
-        }
-      },
-      webpackLinux: {
-        cmd: function (webpackfile) { return `./node_modules/.bin/webpack --config ${webpackfile}` },
+      webpack: {
+        cmd: 'npx webpack --config ./src/webpack.prod.config.js',
         options: {
           env: 'production'
         }
@@ -83,15 +76,20 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-exec')
 
-  // setup tasks desktop
+  // setup tasks
   grunt.registerTask('start', 'Start debugging', function () {
     grunt.task.run('prep')
-    // grunt.task.run('check')
-    grunt.task.run('build')
+    grunt.task.run('buildserver')
     grunt.task.run('debug')
+  })
+  grunt.registerTask('prepdeploy', 'Build for Production Use', function () {
+    grunt.task.run('prep')
+    grunt.task.run('buildserver')
+    grunt.task.run('buildclient')
   })
   grunt.registerTask('prep', ['clean:app', 'copy:app'])
   grunt.registerTask('debug', ['nodemon:app'])
   grunt.registerTask('check', ['eslint:app', 'eslint:server'])
-  grunt.registerTask('build', ['babel:app'])
+  grunt.registerTask('buildserver', ['babel:app'])
+  grunt.registerTask('buildclient', ['exec:webpack'])
 }
