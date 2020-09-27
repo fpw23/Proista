@@ -9,7 +9,8 @@
     "dist"
   ],
   "scripts": {
-    "start": "grunt start"
+    "start": "grunt start",
+    "predeploy": "grunt predeploy" 
   },
   "publishConfig": {
     "access": "restricted"
