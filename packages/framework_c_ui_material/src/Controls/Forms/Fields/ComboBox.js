@@ -13,7 +13,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput'
 import FilledInput from '@material-ui/core/FilledInput'
 import ListSubheader from '@material-ui/core/ListSubheader'
 
-export class ComboBoxClassPlain extends React.Component {
+class ComboBoxClassPlain extends React.Component {
   constructor (props) {
     super(props)
 
@@ -219,7 +219,7 @@ export class ComboBoxClassPlain extends React.Component {
   }
 };
 
-const ComboBoxClass = compose(
+export const ComboBoxClass = compose(
   WithRedux([], [FActions.SetFieldValue, FActions.ClearFields])
 )(ComboBoxClassPlain)
 
