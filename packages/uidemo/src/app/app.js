@@ -16,6 +16,7 @@ import * as D from './Controls/Drawers/index'
 import * as NB from './Controls/NumberBox/index'
 import * as SN from './Controls/Notifications/index'
 import * as TL from './Controls/TransferListBox/index'
+import * as DB from './Controls/DateBox/index'
 
 const styles = (theme) => {
   return {
@@ -32,6 +33,7 @@ class AppSideBar extends React.Component {
       <SideBarLink title='Tools' to='/Tools' relativePath={relativePath} />
       <SideBarLink title='Form Box' to='/FormBox' relativePath={relativePath} />
       <SideBarLink title='Text Box' to='/TextBox' relativePath={relativePath} />
+      <SideBarLink title='Date Box' to='/DateBox' relativePath={relativePath} />
       <SideBarLink title='Combo Box' to='/ComboBox' relativePath={relativePath} />
       <SideBarLink title='Check Box' to='/CheckBox' relativePath={relativePath} />
       <SideBarLink title='Number Box' to='/NumberBox' relativePath={relativePath} />
@@ -47,6 +49,7 @@ export class AppPlain extends React.Component {
   componentDidMount () {
     const { RouterAddPathName } = this.props
     RouterAddPathName('TextBox', 'Text Box')
+    RouterAddPathName('DateBox', 'Date Box')
     RouterAddPathName('ComboBox', 'Combo Box')
     RouterAddPathName('FormBox', 'Form Box')
     RouterAddPathName('CheckBox', 'Check Box')
@@ -61,6 +64,7 @@ export class AppPlain extends React.Component {
       <Router>
         <AppSideBar default relativePath={uri} />
         <TB.SideBar path='TextBox/*' relativePath={uri} />
+        <DB.SideBar path='DateBox/*' relativePath={uri} />
         <FB.SideBar path='FormBox/*' relativePath={uri} />
         <CBO.SideBar path='ComboBox/*' relativePath={uri} />
         <CB.SideBar path='CheckBox/*' relativePath={uri} />
@@ -87,6 +91,9 @@ export class AppPlain extends React.Component {
             <IndexRoute path='TextBox' to='./Basic' />
             <TB.TextBoxBasic path='TextBox/Basic' />
             <TB.TextBoxDebounce path='TextBox/Debounce' />
+            {/* Date Box */}
+            <IndexRoute path='DateBox' to='./Basic' />
+            <DB.DateBoxBasic path='DateBox/Basic' />
             {/* Combo Box */}
             <IndexRoute path='ComboBox' to='./Basic' />
             <CBO.ComboBoxBasic path='ComboBox/Basic' />

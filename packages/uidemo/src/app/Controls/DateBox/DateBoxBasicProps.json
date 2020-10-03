@@ -1,0 +1,80 @@
+{
+  "schema": {
+    "title": "Basic Date Box",
+    "description": "A date input",
+    "type": "object",
+    "properties": {
+      "datebox": {
+        "type": "object",
+        "title": "Settings",
+        "properties": {
+          "displayFormat": {
+            "type": "string",
+            "title": "Display Format",
+            "default": "M/D/YYYY"
+          },
+          "clearable": {
+            "type": "boolean",
+            "title": "Allow User Clearing",
+            "default": false
+          },
+          "showToolbar": {
+            "type": "boolean",
+            "title": "Show Tool Bar",
+            "default": false
+          }
+        }
+      },
+      "formbox": {
+        "type": "object",
+        "title": "FormBox Settings",
+        "properties": {
+          "debugMode": {
+            "type": "boolean",
+            "title": "Set Debug Mode",
+            "default": false
+          },
+          "readonly": {
+            "type": "boolean",
+            "title": "Set Read Only",
+            "default": false
+          },
+          "loading": {
+            "type": "boolean",
+            "title": "Set Loading",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "formbox": {
+      "debugMode": {
+        "ui:help": "This will set the debugMode flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "readonly": {
+        "ui:help": "This will set the readonly flag on FormBox",
+        "ui:widget": "radio"
+      },
+      "loading": {
+        "ui:help": "This will set the loading flag on FormBox",
+        "ui:widget": "radio"
+      }
+    },
+    "datebox": {
+      "displayFormat": {
+        "ui:help": "This will set the moment format string on DateBox"
+      },
+      "clearable": {
+        "ui:help": "Should DateBox allow user to clear value",
+        "ui:widget": "radio"
+      },
+      "showToolbar": {
+        "ui:help": "Should DateBox show toolbar in popup mode?",
+        "ui:widget": "radio"
+      }
+    }
+  }
+}
