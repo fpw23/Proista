@@ -55,6 +55,7 @@ export class AppPlain extends React.Component {
     RouterAddPathName('CheckBox', 'Check Box')
     RouterAddPathName('NumberBox', 'Number Box')
     RouterAddPathName('WithHeader', 'With Header')
+    RouterAddPathName('WithTime', 'With Time')
     RouterAddPathName('TransferListBox', 'Transfer List Box')
   }
 
@@ -94,6 +95,7 @@ export class AppPlain extends React.Component {
             {/* Date Box */}
             <IndexRoute path='DateBox' to='./Basic' />
             <DB.DateBoxBasic path='DateBox/Basic' />
+            <DB.DateBoxWithTime path='DateBox/WithTime' />
             {/* Combo Box */}
             <IndexRoute path='ComboBox' to='./Basic' />
             <CBO.ComboBoxBasic path='ComboBox/Basic' />
