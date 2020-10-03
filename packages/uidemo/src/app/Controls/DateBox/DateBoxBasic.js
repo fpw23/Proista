@@ -21,7 +21,8 @@ export class DateBoxBasicPlain extends React.Component {
           return <div className={classes.root}>
             <FormBox {...formbox} form='Test_DateBoxBasic' onSubmit={(values) => { console.log(values) }}>
               <Row>
-                <DateBox {...datebox} name='Plain' label='Plain' layout={LayoutSizes.Half} />
+                <DateBox {...datebox} name='DeskTop' label='Desktop' layout={LayoutSizes.Half} />
+                <DateBox {...datebox} name='Mobile' label='Mobile' displayMode='mobile' layout={LayoutSizes.Half} />
               </Row>
             </FormBox>
           </div>

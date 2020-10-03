@@ -11,7 +11,7 @@
           "displayFormat": {
             "type": "string",
             "title": "Display Format",
-            "default": "M/D/YYYY"
+            "default": "MM/DD/YYYY"
           },
           "clearable": {
             "type": "boolean",
