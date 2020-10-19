@@ -57,6 +57,7 @@ export class AppPlain extends React.Component {
     RouterAddPathName('WithHeader', 'With Header')
     RouterAddPathName('WithTime', 'With Time')
     RouterAddPathName('TransferListBox', 'Transfer List Box')
+    RouterAddPathName('InitialValues', 'Initial Values')
   }
 
   renderSideBar = () => {
@@ -128,6 +129,7 @@ export class AppPlain extends React.Component {
             <IndexRoute path='TransferListBox' to='./Basic' />
             <TL.Basic path='TransferListBox/Basic' />
             <TL.Grouping path='TransferListBox/Grouping' />
+            <TL.InitialValues path='TransferListBox/InitialValues' />
             {/* Unknown */}
             <UnknownRoute default />
           </Router>

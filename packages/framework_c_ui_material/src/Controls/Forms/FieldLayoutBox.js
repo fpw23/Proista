@@ -27,7 +27,7 @@ export class FieldLayoutBoxPlain extends React.Component {
       meta, label, caption, layout, hide, loadingOptions = {
         variant: 'text',
         height: '4rem'
-      }, classes,
+      }, classes, customLoading = false,
       input: { value, onChange, onBlur, name, onFocus },
       placeHolder, children, className, required = false, color,
       readonly: localReadOnly, 'data-tid': testId = '', debugMode: localDebugMode = false,
@@ -62,7 +62,23 @@ export class FieldLayoutBoxPlain extends React.Component {
     }
 
     const fieldBody = loading === true
-      ? <Skeleton {...loadingOptions} />
+      ? customLoading === true
+        ? children({
+          showError,
+          value,
+          onChange,
+          onBlur,
+          name,
+          onFocus,
+          placeHolder,
+          loading,
+          testId,
+          readonly,
+          caption,
+          label,
+          sideEffects: effects
+        })
+        : <Skeleton {...loadingOptions} />
       : children({
         showError,
         value,

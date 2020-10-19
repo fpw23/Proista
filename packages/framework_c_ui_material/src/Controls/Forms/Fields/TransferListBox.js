@@ -14,7 +14,7 @@ import { Field } from 'redux-form'
 import Typography from '@material-ui/core/Typography'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import { comparePaths } from '@proista/client-tools/lib/comparePaths'
-
+import Skeleton from '@material-ui/lab/Skeleton'
 import { FieldLayoutBox } from '../FieldLayoutBox'
 import { Row, Col, LayoutSizes } from '../../Core/index'
 import { FieldValueFormatter, FieldValueParser } from '../FieldValueConverters'
@@ -61,9 +61,9 @@ class TransferListPlain extends React.Component {
 
   componentDidMount () {
     this.setState((state, props) => {
-      const { value = [], options = [] } = props
+      const { value = [], options = [], valueProp = 'Value' } = props
       return {
-        left: _.clone(options),
+        left: not(options, value, valueProp),
         right: _.clone(value)
       }
     })
@@ -74,8 +74,10 @@ class TransferListPlain extends React.Component {
 
     if (options.HasChanged) {
       console.log('Opts Changed!')
+      const { value = [], valueProp = 'Value' } = this.props
       this.setState({
-        left: _.clone(options.Current)
+        left: not(options.Current, value, valueProp),
+        right: _.clone(value)
       })
     }
   }
@@ -222,13 +224,13 @@ class TransferListPlain extends React.Component {
   }
 
   render () {
-    const { classes, leftTitle = 'Available', rightTitle = 'New', valueProp } = this.props
+    const { classes, leftTitle = 'Available', rightTitle = 'New', valueProp, loading = false } = this.props
     const { left, right, checked } = this.state
     const leftChecked = intersection(checked, left, valueProp)
     const rightChecked = intersection(checked, right, valueProp)
 
     return <Row justify="center" alignItems="center" className={classes.root}>
-      <Col layout={LayoutSizes.Five}>{this.renderList(leftTitle, left)}</Col>
+      <Col layout={LayoutSizes.Five}>{loading === true ? <Skeleton variant='rect' height='10rem' /> : this.renderList(leftTitle, left)}</Col>
       <Col layout={LayoutSizes.Two}>
         <Row direction="column" alignItems="center">
           <Button
@@ -236,7 +238,7 @@ class TransferListPlain extends React.Component {
             size="small"
             className={classes.button}
             onClick={this.handleCheckedRight}
-            disabled={leftChecked.length === 0}
+            disabled={loading || leftChecked.length === 0}
             aria-label="move selected right"
           >
           &gt;
@@ -246,14 +248,14 @@ class TransferListPlain extends React.Component {
             size="small"
             className={classes.button}
             onClick={this.handleCheckedLeft}
-            disabled={rightChecked.length === 0}
+            disabled={loading || rightChecked.length === 0}
             aria-label="move selected left"
           >
           &lt;
           </Button>
         </Row>
       </Col>
-      <Col layout={LayoutSizes.Five}>{this.renderList(rightTitle, right)}</Col>
+      <Col layout={LayoutSizes.Five}>{loading === true ? <Skeleton variant='rect' height='10rem' /> : this.renderList(rightTitle, right)}</Col>
     </Row>
   }
 }
@@ -261,11 +263,36 @@ class TransferListPlain extends React.Component {
 const TransferList = withStyles(transferStyles)(TransferListPlain)
 
 export class TransferListBoxClass extends React.Component {
+  getValue = (reduxValues) => {
+    const { options, valueProp = 'Value' } = this.props
+
+    let ret = []
+    if (_.isArray(reduxValues)) {
+      for (const key of reduxValues) {
+        const matches = _.filter(options, (o) => {
+          return o[valueProp] === key
+        })
+        if (matches.length > 0) {
+          ret = [...ret, ...matches]
+        }
+      }
+    }
+
+    return ret
+  }
+
+  onChange = (newValues) => {
+    console.log('on change', newValues)
+    const { valueProp = 'Value', input: { onChange } } = this.props
+    const ret = _.map(newValues, (v) => { return v[valueProp] })
+    onChange(ret)
+  }
+
   render () {
     const { options = [], groupProp, textProp = 'Text', valueProp = 'Value', rightTitle, leftTitle, ...rest } = this.props
     return (
-      <FieldLayoutBox {...rest}>
-        {({ showError, value = [], onChange, name, placeHolder, loading, readonly, testId, onBlur, label }) => {
+      <FieldLayoutBox customLoading {...rest}>
+        {({ showError, value = [], name, placeHolder, loading, readonly, testId, onBlur, label }) => {
           const htmlId = `transferlist_${name}`
           return <Row>
             {label && (
@@ -284,10 +311,12 @@ export class TransferListBoxClass extends React.Component {
                 valueProp={valueProp}
                 data-tid={testId}
                 options={options}
-                value={value}
-                onChange={onChange}
+                value={this.getValue(value)}
+                onChange={this.onChange}
                 id={htmlId}
                 name={htmlId}
+                readonly={readonly}
+                loading={loading}
               />
             </Col>
           </Row>
