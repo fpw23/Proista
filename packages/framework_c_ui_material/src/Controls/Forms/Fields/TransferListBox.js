@@ -18,6 +18,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import { FieldLayoutBox } from '../FieldLayoutBox'
 import { Row, Col, LayoutSizes } from '../../Core/index'
 import { FieldValueFormatter, FieldValueParser } from '../FieldValueConverters'
+import { not, intersection, union } from './Shared'
 
 const transferStyles = (theme) => ({
   root: {
@@ -36,18 +37,6 @@ const transferStyles = (theme) => ({
     margin: theme.spacing(0.5, 0)
   }
 })
-
-function not (a, b, valueProp) {
-  return _.filter(a, (aValue) => { return _.find(b, (bValue) => { return aValue[valueProp] === bValue[valueProp] }) === undefined })
-}
-
-function intersection (a, b, valueProp) {
-  return _.filter(a, (aValue) => { return _.find(b, (bValue) => { return aValue[valueProp] === bValue[valueProp] }) !== undefined })
-}
-
-function union (a, b, valueProp) {
-  return [...a, ...not(b, a, valueProp)]
-}
 
 class TransferListPlain extends React.Component {
   constructor (props) {
