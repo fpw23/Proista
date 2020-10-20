@@ -27,7 +27,7 @@ export class FieldLayoutBoxPlain extends React.Component {
       meta, label, caption, layout, hide, loadingOptions = {
         variant: 'text',
         height: '4rem'
-      }, classes, customLoading = false,
+      }, classes, customLoading = false, component,
       input: { value, onChange, onBlur, name, onFocus },
       placeHolder, children, className, required = false, color,
       readonly: localReadOnly, 'data-tid': testId = '', debugMode: localDebugMode = false,
@@ -102,6 +102,7 @@ export class FieldLayoutBoxPlain extends React.Component {
         error={showError}
         fullWidth={true}
         required={required}
+        component={component}
         color={color}
         variant={variant || readonly === true ? 'filled' : 'outlined'}
       >

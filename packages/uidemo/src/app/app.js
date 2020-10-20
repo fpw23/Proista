@@ -12,6 +12,7 @@ import * as FB from './Controls/FormBox/index'
 import * as B from './Controls/Button/index'
 import * as CBO from './Controls/ComboBox/index'
 import * as CB from './Controls/CheckBox/index'
+import * as CLB from './Controls/CheckListBox/index'
 import * as D from './Controls/Drawers/index'
 import * as NB from './Controls/NumberBox/index'
 import * as SN from './Controls/Notifications/index'
@@ -36,6 +37,7 @@ class AppSideBar extends React.Component {
       <SideBarLink title='Date Box' to='/DateBox' relativePath={relativePath} />
       <SideBarLink title='Combo Box' to='/ComboBox' relativePath={relativePath} />
       <SideBarLink title='Check Box' to='/CheckBox' relativePath={relativePath} />
+      <SideBarLink title='Check List Box' to='/CheckListBox' relativePath={relativePath} />
       <SideBarLink title='Number Box' to='/NumberBox' relativePath={relativePath} />
       <SideBarLink title='Button' to='/Button' relativePath={relativePath} />
       <SideBarLink title='Drawer' to='/Drawer' relativePath={relativePath} />
@@ -53,6 +55,7 @@ export class AppPlain extends React.Component {
     RouterAddPathName('ComboBox', 'Combo Box')
     RouterAddPathName('FormBox', 'Form Box')
     RouterAddPathName('CheckBox', 'Check Box')
+    RouterAddPathName('CheckListBox', 'Check List Box')
     RouterAddPathName('NumberBox', 'Number Box')
     RouterAddPathName('WithHeader', 'With Header')
     RouterAddPathName('WithTime', 'With Time')
@@ -70,6 +73,7 @@ export class AppPlain extends React.Component {
         <FB.SideBar path='FormBox/*' relativePath={uri} />
         <CBO.SideBar path='ComboBox/*' relativePath={uri} />
         <CB.SideBar path='CheckBox/*' relativePath={uri} />
+        <CLB.SideBar path='CheckListBox/*' relativePath={uri} />
         <NB.SideBar path='NumberBox/*' relativePath={uri} />
         <B.SideBar path='Button/*' relativePath={uri} />
         <D.SideBar path='Drawer/*' relativePath={uri} />
@@ -106,6 +110,10 @@ export class AppPlain extends React.Component {
             {/* Check Box */}
             <IndexRoute path='CheckBox' to='./Basic' />
             <CB.CheckBoxBasic path='CheckBox/Basic' />
+            {/* Check List Box */}
+            <IndexRoute path='CheckListBox' to='./Basic' />
+            <CLB.Basic path='CheckListBox/Basic' />
+            <CLB.InitialValues path='CheckListBox/InitialValues' />
             {/* Number Box */}
             <IndexRoute path='NumberBox' to='./Basic' />
             <NB.NumberBoxBasic path='NumberBox/Basic' />
