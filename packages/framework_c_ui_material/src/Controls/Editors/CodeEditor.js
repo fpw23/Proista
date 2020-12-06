@@ -1,6 +1,7 @@
 /* eslint-disable import/first */
 /* eslint-disable import/no-webpack-loader-syntax */
 import React from 'react'
+import _ from 'lodash'
 
 import { comparePaths } from '@proista/client-tools/lib/index'
 
@@ -53,6 +54,18 @@ export class CodeEditor extends React.Component {
     }
   }
 
+  onChange = (newCode, event) => {
+    const { onChange } = this.props
+
+    this.setState({
+      code: newCode
+    }, () => {
+      if (_.isFunction(onChange)) {
+        onChange(newCode, event)
+      }
+    })
+  }
+
   render () {
     const { containerHeight = 0, containerWidth = 0 } = this.state
     const { className, mode = 'text', ...rest } = this.props
@@ -60,6 +73,7 @@ export class CodeEditor extends React.Component {
       <AceEditor
         {...rest}
         ref={(r) => { this.editor = r }}
+        onChange={this.onChange}
         height={`${containerHeight}px`}
         width={`${containerWidth}px`}
         theme='github'

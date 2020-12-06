@@ -1,4 +1,4 @@
-import { Colors } from '@proista/client-ui-blockly/lib/index'
+import { Colors } from '@proista/client-ui-blockly/lib/Validation/index'
 
 export const BuildToolBoxConfig = () => {
   return `

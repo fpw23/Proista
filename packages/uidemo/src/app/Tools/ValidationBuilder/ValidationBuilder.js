@@ -2,15 +2,15 @@ import React from 'react'
 import { compose } from '@proista/client-tools/lib/index'
 import { WithRedux } from '@proista/client-data/lib/WithRedux'
 import { withStyles } from '@material-ui/core/styles'
-import { withSnackbar } from 'notistack'
-import { DrawerStandardStyles, TabPanel } from '@proista/client-ui-material/lib/Controls/Core'
+import { showSnackbar } from '@proista/client-ui-material/lib/Tools/SnackbarUtilsConfigurator'
+import { DrawerStandardStyles, TabPanel, Button } from '@proista/client-ui-material/lib/Controls/Core'
 import IconButton from '@material-ui/core/IconButton'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import SplitPane from 'react-split-pane'
 import CloseIcon from '@material-ui/icons/Close'
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 import clsx from 'clsx'
 import _ from 'lodash'
 import Tabs from '@material-ui/core/Tabs'
@@ -18,6 +18,15 @@ import Tab from '@material-ui/core/Tab'
 import Paper from '@material-ui/core/Paper'
 import { ValidationBuilderEditor } from './Editor/ValidationBuilderEditor'
 import { CodeEditor } from '@proista/client-ui-material/lib/Controls/Editors/CodeEditor'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import { TestValidation, Joi as JoiLib } from '@proista/client/lib/Tools/Validation'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 const styles = (theme) => ({
   ...DrawerStandardStyles,
@@ -75,7 +84,11 @@ export class ValidationBuilderPlain extends React.Component {
       selectedTab: 0,
       code: '[]',
       xml: '',
-      actions: []
+      actions: [],
+      testData: '{}',
+      testDisplay: false,
+      testResults: '',
+      testDataJson: true
     }
   }
 
@@ -98,11 +111,12 @@ export class ValidationBuilderPlain extends React.Component {
 
     switch (selectedTab) {
       case 1:
-        ret.push({ onClick: this.onFormatSchema, label: 'Format', icon: <FormatAlignLeftIcon /> })
+        ret.push({ type: 'switch', checkedProp: 'testDataJson', onChange: this.onTestModeChanged, label: 'Is Json?' })
+        ret.push({ type: 'button', onClick: this.onRunTestResults, label: 'Run Test', icon: <PlayArrowIcon /> })
         break
     }
 
-    ret.push({ onClick: close, label: 'Close', icon: <CloseIcon /> })
+    ret.push({ type: 'button', onClick: close, label: 'Close', icon: <CloseIcon /> })
 
     return ret
   }
@@ -117,21 +131,36 @@ export class ValidationBuilderPlain extends React.Component {
     })
   }
 
-  onFormatSchema = () => {
-    const { code } = this.state
+  onRunTestResults = () => {
+    const { code, testData, testDataJson } = this.state
 
     try {
-      const codeAsJson = JSON.parse(code)
-      const newCode = JSON.stringify(codeAsJson, null, '\t')
-      this.setState({
-        code: newCode
-      })
+      // eslint-disable-next-line no-unused-vars
+      const Joi = JoiLib
+      const testSchema = {}
+      // eslint-disable-next-line no-eval
+      eval(`testSchema = ${_.replace(code, '// Joi Schema Below', '').replace(/\n/g, ' ')}`)
+      // eslint-disable-next-line no-new-func
+      const testValue = testDataJson ? JSON.parse(testData) : testData
+
+      const results = TestValidation(testSchema, testValue)
+      if (results.length === 0) {
+        showSnackbar.success('No Validation Errors')
+      } else {
+        this.setState({
+          testResults: results,
+          testDisplay: true
+        })
+      }
     } catch (err) {
-      const { enqueueSnackbar } = this.props
-      enqueueSnackbar(err.message, {
-        variant: 'error'
-      })
+      showSnackbar.error(err.message)
     }
+  }
+
+  onTestModeChanged = (e) => {
+    this.setState({
+      testDataJson: e.target.checked
+    })
   }
 
   onEditorChanged = (code, xml) => {
@@ -142,14 +171,41 @@ export class ValidationBuilderPlain extends React.Component {
   }
 
   renderActions = (actions = [], classes) => {
-    return _.map(actions, (a) => <IconButton key={a.label} onClick={a.onClick} aria-label={a.label} className={classes.actionButton} component="span">
-      {a.icon}
-    </IconButton>)
+    return _.map(actions, (a, i) => {
+      const { type } = a
+
+      switch (type) {
+        case 'button':
+          return <IconButton key={a.label} onClick={a.onClick} aria-label={a.label} className={classes.actionButton} component="span">
+            {a.icon}
+          </IconButton>
+        case 'switch': {
+          const checked = this.state[a.checkedProp]
+          return <FormControlLabel
+            key={a.label}
+            control={<Switch color='primary' checked={checked} onChange={a.onChange} name={`Switch${i}`} />}
+            label={a.label}
+          />
+        }
+      }
+    })
+  }
+
+  onTestDataChanged = (txt) => {
+    this.setState({
+      testData: txt
+    })
+  }
+
+  onTestDisplayClosed = () => {
+    this.setState({
+      testDisplay: false
+    })
   }
 
   render () {
     const { classes } = this.props
-    const { selectedTab, VSplit = 0, xml, code, actions = [] } = this.state
+    const { selectedTab, VSplit = 0, xml, code, actions = [], testData, testDisplay, testResults, testDataJson } = this.state
 
     return <div id='validationBuilder' className={clsx(classes.wrapper, classes.HFull)}>
       <div className={classes.root}>
@@ -186,19 +242,41 @@ export class ValidationBuilderPlain extends React.Component {
                   <CodeEditor name='output' mode='javascript' value={code} dimensions={{ Width: VSplit, SelectedTab: selectedTab }} highlightActiveLine={false} readOnly showPrintMargin={true} />
                 </TabPanel>
                 <TabPanel value={selectedTab} index={1} keepChildren>
-
+                  <CodeEditor name='testdata' mode={testDataJson ? 'json' : 'text'} value={testData} onChange={this.onTestDataChanged} dimensions={{ Width: VSplit, SelectedTab: selectedTab }} highlightActiveLine={false} showPrintMargin={false} />
                 </TabPanel>
               </div>
             </div>
           </SplitPane>
         </div>
       </div>
+      <Dialog
+        open={testDisplay}
+        onClose={this.onTestDisplayClosed}
+        scroll='paper'
+      >
+        <DialogTitle id="test-results-title">Test Results</DialogTitle>
+        <DialogContent dividers={true}>
+          <DialogContentText
+            tabIndex={-1}
+          >
+            {_.map(testResults, (tr) => <Alert severity='warning'>
+              {tr.Field ? <AlertTitle>{tr.Field}</AlertTitle> : null }
+              {tr.Message}
+            </Alert>)
+            }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.onTestDisplayClosed} color="primary">
+              Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   }
 }
 
 export const ValidationBuilder = compose(
   WithRedux(),
-  withStyles(styles),
-  withSnackbar
+  withStyles(styles)
 )(ValidationBuilderPlain)

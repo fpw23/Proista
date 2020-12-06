@@ -2,8 +2,8 @@ import _ from 'lodash'
 import { MessageBuilder } from './FunctionResult'
 import * as queryString from 'query-string'
 
-export const JoiCore = require('@hapi/joi')
-const JoiMoment = require('@meanie/joi-moment')
+export const JoiCore = require('joi')
+const JoiMoment = require('./ValidationJoiDate')
 
 export const Joi = JoiCore.extend(JoiMoment)
 

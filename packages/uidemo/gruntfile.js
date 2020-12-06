@@ -34,6 +34,14 @@ module.exports = function (grunt) {
           { expand: true, cwd: './node_modules/@proista/client/lib/Resources/js/', src: ['**'], dest: './dist/content/js/' },
           { expand: true, cwd: './node_modules/@proista/client/lib/Resources/css/', src: ['**'], dest: './dist/content/css/' }
         ]
+      },
+      acebuilds: {
+        files: [
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-javascript.js', dest: 'dist/content/js/worker-javascript.js' },
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-html.js', dest: 'dist/content/js/worker-html.js' },
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-css.js', dest: 'dist/content/js/worker-css.js' },
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-json.js', dest: 'dist/content/js/worker-json.js' }
+        ]
       }
     },
     nodemon: {
@@ -87,7 +95,7 @@ module.exports = function (grunt) {
     grunt.task.run('buildserver')
     grunt.task.run('buildclient')
   })
-  grunt.registerTask('prep', ['clean:app', 'copy:app'])
+  grunt.registerTask('prep', ['clean:app', 'copy:app', 'copy:acebuilds'])
   grunt.registerTask('debug', ['nodemon:app'])
   grunt.registerTask('check', ['eslint:app', 'eslint:server'])
   grunt.registerTask('buildserver', ['babel:app'])
