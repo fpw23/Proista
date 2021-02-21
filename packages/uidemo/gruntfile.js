@@ -28,19 +28,26 @@ module.exports = function (grunt) {
       }
     },
     copy: {
-      app: {
+      dist: {
         files: [
           { expand: true, cwd: './node_modules/@proista/client/lib/Resources/images/', src: ['**'], dest: './dist/content/images/' },
           { expand: true, cwd: './node_modules/@proista/client/lib/Resources/js/', src: ['**'], dest: './dist/content/js/' },
-          { expand: true, cwd: './node_modules/@proista/client/lib/Resources/css/', src: ['**'], dest: './dist/content/css/' }
-        ]
-      },
-      acebuilds: {
-        files: [
+          { expand: true, cwd: './node_modules/@proista/client/lib/Resources/css/', src: ['**'], dest: './dist/content/css/' },
           { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-javascript.js', dest: 'dist/content/js/worker-javascript.js' },
           { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-html.js', dest: 'dist/content/js/worker-html.js' },
           { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-css.js', dest: 'dist/content/js/worker-css.js' },
           { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-json.js', dest: 'dist/content/js/worker-json.js' }
+        ]
+      },
+      deploy: {
+        files: [
+          { expand: true, cwd: './node_modules/@proista/client/lib/Resources/images/', src: ['**'], dest: './deploy/content/images/' },
+          { expand: true, cwd: './node_modules/@proista/client/lib/Resources/js/', src: ['**'], dest: './deploy/content/js/' },
+          { expand: true, cwd: './node_modules/@proista/client/lib/Resources/css/', src: ['**'], dest: './deploy/content/css/' },
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-javascript.js', dest: 'deploy/content/js/worker-javascript.js' },
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-html.js', dest: 'deploy/content/js/worker-html.js' },
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-css.js', dest: 'deploy/content/js/worker-css.js' },
+          { src: 'node_modules/@proista/client-ui-material/lib/Resources/js/worker-json.js', dest: 'deploy/content/js/worker-json.js' }
         ]
       }
     },
@@ -65,14 +72,15 @@ module.exports = function (grunt) {
       }
     },
     clean: {
-      app: ['./dist/*']
+      dist: ['./dist/*'],
+      deploy: ['./deploy/*']
     },
     exec: {
-      webpack: {
-        cmd: 'npx webpack --config ./src/webpack.prod.config.js',
-        options: {
-          env: 'production'
-        }
+      webpackDist: {
+        cmd: 'npx webpack --config ./src/webpack.prod.config.js --outputPath=./dist/app'
+      },
+      webpackDeploy: {
+        cmd: 'npx webpack --config ./src/webpack.prod.config.js --outputPath=./deploy'
       }
     }
   })
@@ -86,18 +94,24 @@ module.exports = function (grunt) {
 
   // setup tasks
   grunt.registerTask('start', 'Start debugging', function () {
-    grunt.task.run('prep')
+    grunt.task.run('prepdist')
     grunt.task.run('buildserver')
     grunt.task.run('debug')
   })
-  grunt.registerTask('prepdeploy', 'Build for Production Use', function () {
-    grunt.task.run('prep')
+  grunt.registerTask('prepdocker', 'Build for Docker Use', function () {
+    grunt.task.run('prepdist')
     grunt.task.run('buildserver')
-    grunt.task.run('buildclient')
+    grunt.task.run('buildclientdist')
   })
-  grunt.registerTask('prep', ['clean:app', 'copy:app', 'copy:acebuilds'])
+  grunt.registerTask('prepcloudfront', 'Build for Cloud Front Use', function () {
+    grunt.task.run('prepdeploy')
+    grunt.task.run('buildclientdeploy')
+  })
+  grunt.registerTask('prepdist', ['clean:dist', 'copy:dist'])
+  grunt.registerTask('prepdeploy', ['clean:deploy', 'copy:deploy'])
   grunt.registerTask('debug', ['nodemon:app'])
   grunt.registerTask('check', ['eslint:app', 'eslint:server'])
   grunt.registerTask('buildserver', ['babel:app'])
-  grunt.registerTask('buildclient', ['exec:webpack'])
+  grunt.registerTask('buildclientdist', ['exec:webpackDist'])
+  grunt.registerTask('buildclientdeploy', ['exec:webpackDeploy'])
 }

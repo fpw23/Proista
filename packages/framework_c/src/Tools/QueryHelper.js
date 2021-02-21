@@ -10,7 +10,8 @@ const globals = {
   onFRSuccess: undefined,
   onFRFailure: undefined,
   onError: undefined,
-  getExtraPostData: undefined
+  getExtraPostData: undefined,
+  getBaseURL: undefined
 }
 
 export const WithQuerySetGlobalOptions = (options) => {
@@ -35,6 +36,12 @@ export const WithQuerySetGlobalOptions = (options) => {
   if (_.has(options, 'getExtraPostData')) {
     if (_.isFunction(options.getExtraPostData)) {
       globals.getExtraPostData = options.getExtraPostData
+    }
+  }
+
+  if (_.has(options, 'getBaseURL')) {
+    if (_.isFunction(options.getBaseURL)) {
+      globals.getBaseURL = options.getBaseURL
     }
   }
 }
@@ -116,7 +123,8 @@ export function WithQuery (options) {
                       url: a.url,
                       data: queryParams,
                       crossDomain: true,
-                      method: 'post'
+                      method: 'post',
+                      baseURL: _.isFunction(globals.getBaseURL) ? globals.getBaseURL() : undefined
                     }
 
                     if (_.isFunction(globals.getExtraPostData)) {

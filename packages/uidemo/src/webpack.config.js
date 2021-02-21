@@ -28,7 +28,6 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      AUTH_COOKIE_PREFIX: 'Proista',
       NODE_ENV: 'development'
     }),
     new HtmlWebpackPlugin({

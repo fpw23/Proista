@@ -68,6 +68,7 @@
     "@proista/client-ui-blockly": "^0.2.0-alpha.1",
     "@proista/client-ui-material": "^0.2.0-alpha.27",
     "@rjsf/material-ui": "^2.2.1",
+    "@vendia/serverless-express": "^4.3.2",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "notistack": "^0.9.14",
