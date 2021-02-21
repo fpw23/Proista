@@ -1,6 +1,6 @@
 {
   "name": "@proista/server",
-  "version": "0.2.0-alpha.4",
+  "version": "0.2.0-alpha.5",
   "description": "Proista Server Framework",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "http://www.proistaworkflows.com",
@@ -48,7 +48,7 @@
     "grunt-nodemon": "^0.4.2"
   },
   "dependencies": {
-    "@proista/server-core": "^0.2.0-alpha.4",
+    "@proista/server-core": "^0.2.0-alpha.5",
     "lodash": "^4.17.15"
   },
   "gitHead": "507aae846c082f7c9ef4eab7fb5469a5caac17da"

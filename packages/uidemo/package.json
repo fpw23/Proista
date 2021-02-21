@@ -1,6 +1,6 @@
 {
   "name": "@proista/uidemo",
-  "version": "0.2.0-alpha.27",
+  "version": "0.2.0-alpha.28",
   "description": "Demo Proista UI",
   "author": "Frank Wisniewski <me@frankwisniewski.net>",
   "homepage": "https://github.com/fpw23/Proista#readme",
@@ -62,11 +62,11 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
-    "@proista/client": "^0.2.0-alpha.11",
+    "@proista/client": "^0.2.0-alpha.12",
     "@proista/client-data": "^0.2.0-alpha.1",
     "@proista/client-tools": "^0.2.0-alpha.1",
     "@proista/client-ui-blockly": "^0.2.0-alpha.1",
-    "@proista/client-ui-material": "^0.2.0-alpha.27",
+    "@proista/client-ui-material": "^0.2.0-alpha.28",
     "@rjsf/material-ui": "^2.2.1",
     "@vendia/serverless-express": "^4.3.2",
     "express": "^4.17.1",
