@@ -81,6 +81,9 @@ module.exports = function (grunt) {
       },
       webpackDeploy: {
         cmd: 'npx webpack --config ./src/webpack.prod.config.js --outputPath=./deploy'
+      },
+      s3push: {
+        cmd: 'aws --profile=frank-cestno-proista s3 sync deploy/ s3://proista-uidemo --delete'
       }
     }
   })
@@ -107,6 +110,7 @@ module.exports = function (grunt) {
     grunt.task.run('prepdeploy')
     grunt.task.run('buildclientdeploy')
   })
+  grunt.registerTask('deploys3', ['exec:s3push'])
   grunt.registerTask('prepdist', ['clean:dist', 'copy:dist'])
   grunt.registerTask('prepdeploy', ['clean:deploy', 'copy:deploy'])
   grunt.registerTask('debug', ['nodemon:app'])
