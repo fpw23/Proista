@@ -6,6 +6,8 @@ import { IdHelper } from './IdHelper'
 import React from 'react'
 import axios from 'axios'
 
+// getbaseURL
+
 const globals = {
   onFRSuccess: undefined,
   onFRFailure: undefined,
